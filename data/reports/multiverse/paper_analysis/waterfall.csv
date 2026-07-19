@@ -1,0 +1,9 @@
+stage,n_dropped_here,n_surviving
+00_raw,0,30370
+03_presence,1841,28529
+04_qc_cv,20890,7639
+05_sample_qc_ratio,370,7269
+06_blank,1138,6131
+07_dilution,1192,4939
+08_ccs,140,4799
+10_origin,155,4644

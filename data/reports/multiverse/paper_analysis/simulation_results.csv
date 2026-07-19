@@ -1,0 +1,8 @@
+tp,fp,fn,precision,recall,f1,jaccard,method
+9,3,21,0.75,0.3,0.4286,0.2727,path_A_classical
+10,3,20,0.7692,0.3333,0.4651,0.303,path_B_robust_ml
+9,3,21,0.75,0.3,0.4286,0.2727,path_C_mnar_aware
+12,1,18,0.9231,0.4,0.5581,0.3871,path_D_middle
+10,3,20,0.7692,0.3333,0.4651,0.303,consensus_2of4
+9,3,21,0.75,0.3,0.4286,0.2727,consensus_tier1_3of4
+12,3,18,0.8,0.4,0.5333,0.3636,union_1of4

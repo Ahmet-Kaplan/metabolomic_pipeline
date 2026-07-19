@@ -1,0 +1,572 @@
+{
+  "name": "path_b_robust_ml",
+  "title": "Path path_b_robust_ml \u2014 missforest \u2192 serrf \u2192 mstus \u2192 glog \u2192 pareto",
+  "path_chain": [
+    "missforest",
+    "serrf",
+    "mstus",
+    "glog",
+    "pareto"
+  ],
+  "created_at": "2026-05-06T17:04:09",
+  "n_sections": 11,
+  "n_figures": 55,
+  "sections": [
+    {
+      "name": "imputation",
+      "title": "missForest \u2014 random-forest imputation",
+      "method": "missforest",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "n_missing_before",
+          "value": 1602,
+          "unit": "cells"
+        },
+        {
+          "name": "frac_missing_before",
+          "value": 0.734,
+          "unit": "%"
+        },
+        {
+          "name": "n_imputed",
+          "value": 1602,
+          "unit": "cells"
+        },
+        {
+          "name": "frac_imputed",
+          "value": 0.734,
+          "unit": "%"
+        },
+        {
+          "name": "imputed_median",
+          "value": 47.6635,
+          "unit": ""
+        },
+        {
+          "name": "imputed_p05",
+          "value": 3.1541,
+          "unit": ""
+        },
+        {
+          "name": "imputed_p95",
+          "value": 1032.5223,
+          "unit": ""
+        },
+        {
+          "name": "observed_median",
+          "value": 251.2792,
+          "unit": ""
+        },
+        {
+          "name": "median imputed / min(observed)",
+          "value": 60.2064,
+          "unit": ""
+        }
+      ],
+      "n_figures": 5,
+      "n_tables": 1
+    },
+    {
+      "name": "drift",
+      "title": "SERRF \u2014 Systematic Error Removal via Random Forest",
+      "method": "serrf",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "D-ratio (before)",
+          "value": 0.3793,
+          "unit": ""
+        },
+        {
+          "name": "D-ratio (after)",
+          "value": 0.1629,
+          "unit": ""
+        },
+        {
+          "name": "PMSD (before)",
+          "value": 63.4203,
+          "unit": ""
+        },
+        {
+          "name": "PMSD (after)",
+          "value": 21.7959,
+          "unit": ""
+        },
+        {
+          "name": "median QC-CV % (before)",
+          "value": 20.9772,
+          "unit": ""
+        },
+        {
+          "name": "median QC-CV % (after)",
+          "value": 6.9552,
+          "unit": ""
+        },
+        {
+          "name": "biological silhouette (before)",
+          "value": 0.2372,
+          "unit": ""
+        },
+        {
+          "name": "biological silhouette (after)",
+          "value": 0.2322,
+          "unit": ""
+        },
+        {
+          "name": "% features QC-CV \u2264 30 (before)",
+          "value": 99.9569,
+          "unit": ""
+        },
+        {
+          "name": "% features QC-CV \u2264 30 (after)",
+          "value": 100.0,
+          "unit": ""
+        }
+      ],
+      "n_figures": 8,
+      "n_tables": 0
+    },
+    {
+      "name": "normalisation",
+      "title": "MSTUS \u2014 MS Total Useful Signal normalisation",
+      "method": "mstus",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "PMSD (before)",
+          "value": 21.7959,
+          "unit": ""
+        },
+        {
+          "name": "PMSD (after)",
+          "value": 22.1272,
+          "unit": ""
+        },
+        {
+          "name": "median QC-CV % (before)",
+          "value": 6.9552,
+          "unit": ""
+        },
+        {
+          "name": "median QC-CV % (after)",
+          "value": 7.3343,
+          "unit": ""
+        },
+        {
+          "name": "biological silhouette (before)",
+          "value": 0.2322,
+          "unit": ""
+        },
+        {
+          "name": "biological silhouette (after)",
+          "value": 0.2309,
+          "unit": ""
+        },
+        {
+          "name": "factor median",
+          "value": 1.0,
+          "unit": ""
+        },
+        {
+          "name": "factor min",
+          "value": 0.782,
+          "unit": ""
+        },
+        {
+          "name": "factor max",
+          "value": 1.1059,
+          "unit": ""
+        }
+      ],
+      "n_figures": 5,
+      "n_tables": 1
+    },
+    {
+      "name": "transformation",
+      "title": "Generalized logarithm (glog) transformation",
+      "method": "glog",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "heteroscedasticity slope (before)",
+          "value": 0.9165,
+          "unit": ""
+        },
+        {
+          "name": "heteroscedasticity slope (after)",
+          "value": -0.3537,
+          "unit": ""
+        },
+        {
+          "name": "mean |skewness| (before)",
+          "value": 1.108,
+          "unit": ""
+        },
+        {
+          "name": "mean |skewness| (after)",
+          "value": 0.9288,
+          "unit": ""
+        },
+        {
+          "name": "KS-normal fraction (before)",
+          "value": 0.6944,
+          "unit": ""
+        },
+        {
+          "name": "KS-normal fraction (after)",
+          "value": 0.6189,
+          "unit": ""
+        }
+      ],
+      "n_figures": 6,
+      "n_tables": 0
+    },
+    {
+      "name": "scaling",
+      "title": "Pareto scaling \u2014 (x \u2212 mean) / \u221aSD per feature",
+      "method": "pareto",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "per-feature mean (after) \u2014 median |\u00b7|",
+          "value": 0.0,
+          "unit": ""
+        },
+        {
+          "name": "per-feature SD (after) \u2014 median",
+          "value": 0.7175,
+          "unit": ""
+        },
+        {
+          "name": "per-feature SD (before) \u2014 median",
+          "value": 0.5148,
+          "unit": ""
+        },
+        {
+          "name": "n_constant_features",
+          "value": 0,
+          "unit": "features"
+        }
+      ],
+      "n_figures": 3,
+      "n_tables": 0
+    },
+    {
+      "name": "outlier",
+      "title": "SIMCA outlier diagnostic \u2014 Hotelling T\u00b2 + DModX",
+      "method": "simca_t2_dmodx",
+      "parameters": {
+        "n_components": 5,
+        "alpha": 0.05,
+        "biological_only": true
+      },
+      "metrics": [
+        {
+          "name": "n_samples_analysed",
+          "value": 31,
+          "unit": ""
+        },
+        {
+          "name": "n_components",
+          "value": 5,
+          "unit": ""
+        },
+        {
+          "name": "explained_variance_total %",
+          "value": 71.51,
+          "unit": ""
+        },
+        {
+          "name": "T\u00b2 critical (\u03b1)",
+          "value": 14.9238,
+          "unit": ""
+        },
+        {
+          "name": "DModX critical (\u03b1)",
+          "value": 1.0174,
+          "unit": ""
+        },
+        {
+          "name": "n_outliers_T\u00b2_only",
+          "value": 1,
+          "unit": ""
+        },
+        {
+          "name": "n_outliers_DModX_only",
+          "value": 2,
+          "unit": ""
+        },
+        {
+          "name": "n_outliers_either",
+          "value": 3,
+          "unit": ""
+        }
+      ],
+      "n_figures": 4,
+      "n_tables": 1
+    },
+    {
+      "name": "univariate",
+      "title": "Univariate statistics \u2014 one-way ANOVA + BH-FDR + \u03b7\u00b2 + per-pair log2 FC + Tukey HSD",
+      "method": "anova_bh_eta_tukey",
+      "parameters": {
+        "min_per_group": 3,
+        "fdr_method": "bh",
+        "tukey_post_hoc": "auto",
+        "tukey_q_threshold": 0.05,
+        "q_significance": 0.05,
+        "log2_fc_threshold": 1.0,
+        "n_groups": 5,
+        "group_names": "MCF10A, MCF7, MDAMB231, SKBR3, UACC",
+        "group_counts": "MCF10A=6, MCF7=7, MDAMB231=6, SKBR3=6, UACC=6"
+      },
+      "metrics": [
+        {
+          "name": "n_features",
+          "value": 4644,
+          "unit": "features"
+        },
+        {
+          "name": "n_groups",
+          "value": 5,
+          "unit": ""
+        },
+        {
+          "name": "n_significant (q<0.05)",
+          "value": 2926,
+          "unit": "features"
+        },
+        {
+          "name": "n_large_eta_squared (\u03b7\u00b2\u22650.14)",
+          "value": 4206,
+          "unit": "features"
+        },
+        {
+          "name": "n_significant + large \u03b7\u00b2",
+          "value": 2926,
+          "unit": "features"
+        },
+        {
+          "name": "median \u03b7\u00b2",
+          "value": 0.467,
+          "unit": ""
+        },
+        {
+          "name": "median p_value",
+          "value": "0.00198",
+          "unit": ""
+        }
+      ],
+      "n_figures": 5,
+      "n_tables": 1
+    },
+    {
+      "name": "multivariate_plsda",
+      "title": "Multivariate \u2014 PLS-DA (Geladi & Kowalski 1986)",
+      "method": "plsda",
+      "parameters": {
+        "n_components": 4,
+        "scale": false,
+        "biological_only": true,
+        "stability_top_k": 46,
+        "n_bootstrap": 100,
+        "n_permutation": 1000,
+        "runtime_seconds": 48.1
+      },
+      "metrics": [
+        {
+          "name": "n_features",
+          "value": 4644,
+          "unit": ""
+        },
+        {
+          "name": "n_VIP\u22651",
+          "value": 1494,
+          "unit": ""
+        },
+        {
+          "name": "n_stable (\u22650.8)",
+          "value": 7,
+          "unit": ""
+        },
+        {
+          "name": "n_perm_p<0.05",
+          "value": 307,
+          "unit": ""
+        },
+        {
+          "name": "n_shortlist (VIP+stab+p)",
+          "value": 6,
+          "unit": ""
+        },
+        {
+          "name": "median VIP",
+          "value": 0.8048,
+          "unit": ""
+        }
+      ],
+      "n_figures": 5,
+      "n_tables": 1
+    },
+    {
+      "name": "multivariate_splsda",
+      "title": "Multivariate \u2014 sPLS-DA (sparse PLS-DA, L\u00ea Cao 2011)",
+      "method": "splsda",
+      "parameters": {
+        "keep_n_per_comp": 0,
+        "n_components": 4,
+        "biological_only": true,
+        "n_bootstrap": 100,
+        "n_permutation": 1000,
+        "runtime_seconds": 11.3
+      },
+      "metrics": [
+        {
+          "name": "n_features",
+          "value": 4644,
+          "unit": ""
+        },
+        {
+          "name": "n_selected",
+          "value": 181,
+          "unit": ""
+        },
+        {
+          "name": "sparsity %",
+          "value": 96.1,
+          "unit": ""
+        },
+        {
+          "name": "n_stable (\u22650.8)",
+          "value": 3,
+          "unit": ""
+        },
+        {
+          "name": "n_perm_p<0.05",
+          "value": 85,
+          "unit": ""
+        },
+        {
+          "name": "n_shortlist (sel+stab+p)",
+          "value": 0,
+          "unit": ""
+        }
+      ],
+      "n_figures": 5,
+      "n_tables": 1
+    },
+    {
+      "name": "multivariate_rf",
+      "title": "Multivariate \u2014 Random Forest (Breiman 2001)",
+      "method": "rf",
+      "parameters": {
+        "n_estimators": 310,
+        "biological_only": true,
+        "n_bootstrap": 100,
+        "n_permutation": 1000,
+        "runtime_seconds": 1593.5
+      },
+      "metrics": [
+        {
+          "name": "n_features",
+          "value": 4644,
+          "unit": ""
+        },
+        {
+          "name": "n_stable (\u22650.8)",
+          "value": 0,
+          "unit": ""
+        },
+        {
+          "name": "n_perm_p<0.05",
+          "value": 453,
+          "unit": ""
+        },
+        {
+          "name": "n_shortlist (stab+p)",
+          "value": 0,
+          "unit": ""
+        },
+        {
+          "name": "median Gini",
+          "value": 0.0,
+          "unit": ""
+        },
+        {
+          "name": "median perm importance",
+          "value": 0.0,
+          "unit": ""
+        }
+      ],
+      "n_figures": 5,
+      "n_tables": 1
+    },
+    {
+      "name": "path_summary",
+      "title": "Path summary \u2014 attrition, runtime, cross-method consensus",
+      "method": "path_summary",
+      "parameters": {
+        "q_threshold": 0.05,
+        "eta_threshold": 0.14,
+        "vip_threshold": 1.0,
+        "stability_threshold": 0.8,
+        "perm_p_threshold": 0.05
+      },
+      "metrics": [
+        {
+          "name": "n_features_input",
+          "value": 4644,
+          "unit": ""
+        },
+        {
+          "name": "n_features_final",
+          "value": 4644,
+          "unit": ""
+        },
+        {
+          "name": "overall retention %",
+          "value": 100.0,
+          "unit": ""
+        },
+        {
+          "name": "total runtime (s)",
+          "value": 37640.04,
+          "unit": ""
+        },
+        {
+          "name": "shortlist size \u2014 univariate",
+          "value": 2926,
+          "unit": "features"
+        },
+        {
+          "name": "shortlist size \u2014 plsda",
+          "value": 6,
+          "unit": "features"
+        },
+        {
+          "name": "shortlist size \u2014 splsda",
+          "value": 0,
+          "unit": "features"
+        },
+        {
+          "name": "shortlist size \u2014 rf",
+          "value": 0,
+          "unit": "features"
+        },
+        {
+          "name": "n_features_in_any_shortlist",
+          "value": 2926,
+          "unit": "features"
+        },
+        {
+          "name": "n_features_in_all_shortlists",
+          "value": 0,
+          "unit": "features"
+        }
+      ],
+      "n_figures": 4,
+      "n_tables": 2
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+============================================================
+Pipeline-Wide Permutation FDR
+============================================================
+
+[Fast mode] Path A only, univariate only
+Paths: ['path_a_classical']
+
+--- Pre-processing (label-independent) ---
+Loading raw data...
+2026-07-07 09:47:34 [info     ] active_features_loaded         n=4644 outcome_filter=None source=kept_features.parquet
+2026-07-07 09:47:35 [info     ] multiverse_data_loaded         n_features=4644 n_run_order=53 n_samples=47 outcome_filter=None
+
+  Pre-processing path_a_classical...
+    [cached] loading from data/.pipeline_fdr_cache/path_a_classical_*.parquet
+2026-07-07 09:47:35 [info     ] active_features_loaded         n=4644 outcome_filter=None source=kept_features.parquet
+2026-07-07 09:47:35 [info     ] multiverse_data_loaded         n_features=4644 n_run_order=53 n_samples=47 outcome_filter=None
+
+--- Running 50 label permutations ---
+  (univariate only — fast)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   1/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   2/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   3/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   4/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   5/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   6/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   7/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   8/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [   9/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  10/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  11/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  12/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  13/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  14/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  15/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  16/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  17/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  18/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  19/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  20/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  21/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  22/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  23/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  24/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  25/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  26/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  27/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  28/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  29/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  30/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  31/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  32/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  33/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  34/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  35/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=2 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 2, 'none': 4642} n_shortlisted=0
+  [  36/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  37/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  38/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  39/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  40/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  41/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  42/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  43/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  44/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  45/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  46/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  47/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  48/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  49/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+2026-07-07 09:47:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-07-07 09:47:35 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=0 n_tukey_computed=0 tukey_post_hoc=none
+2026-07-07 09:47:35 [warning  ] method_contributed_no_features method=univariate n_evidence_rows=4644
+2026-07-07 09:47:35 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.01 k=2 methods=['univariate'] n_input_features=4644 n_methods_used=1 n_per_tier={'tier_1': 0, 'tier_2': 0, 'tier_3': 0, 'none': 4644} n_shortlisted=0
+  [  50/50] shortlists: [0]  consensus: 0  (0s, ETA 0 min)
+
+--- Results ---
+  Observed consensus: 15
+  path_a_classical: mean=0.00, 95%ile=0, max=0
+  consensus: mean=0.00, 95%ile=0, max=0
+
+[written] docs/evaluation/pipeline_permutation_fdr.md
+
+  Total: 2s

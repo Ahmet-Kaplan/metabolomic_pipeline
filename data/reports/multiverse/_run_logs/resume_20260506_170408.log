@@ -1,0 +1,127 @@
+[17:04:09] === RESUME PRODUCTION MULTIVERSE RUN ===
+[17:04:09] BLAS thread caps applied: OMP/OPENBLAS/MKL/BLIS/NUMEXPR_NUM_THREADS=1
+[17:04:09] missForest n_jobs uses _auto_n_jobs() (leaves 4 cores for OS)
+[17:04:09] persistent log: data/reports/multiverse/_run_logs/resume_20260506_170409.log
+[17:04:09] N_BOOTSTRAP=100, N_PERMUTATION=1000
+   ✓ already complete: path_a_classical
+   ⏳ pending:           path_b_robust_ml
+   ⏳ pending:           path_c_mnar_aware
+   ⏳ pending:           path_d_middle
+
+[17:04:09] loading real data...
+  loaded: 4,644 features × 47 samples; run_order: 53
+
+[17:04:09] running 3 pending paths...
+2026-05-06 17:04:09 [info     ] multiverse_run_start           n_bootstrap=100 n_paths=3 n_permutation=1000 path_names=['path_b_robust_ml', 'path_c_mnar_aware', 'path_d_middle']
+2026-05-06 17:04:09 [info     ] multiverse_path_start          i=1 n_total=3 path=path_b_robust_ml
+2026-05-06 17:04:09 [info     ] path_run_start                 chain=['missforest', 'serrf', 'mstus', 'glog', 'pareto'] n_bootstrap=100 n_permutation=1000 path=path_b_robust_ml
+/home/slurm-worker/biomarker-discovery/.venv/lib/python3.13/site-packages/sklearn/impute/_iterative.py:867: ConvergenceWarning: [IterativeImputer] Early stopping criterion not reached.
+  warnings.warn(
+2026-05-07 02:45:44 [info     ] missforest_imputation_done     converged=False max_iter=21 max_iter_auto=True n_cpus_total=44 n_estimators=123 n_estimators_auto=True n_features=4644 n_iter_used=21 n_jobs=32 n_jobs_auto=True n_missing_filled=1602 n_nearest_features=46 n_nearest_features_auto=True n_samples=47 n_zero_treated_as_missing=1602 oob_enabled=True tol=0.001 treat_zero_as_missing=True
+2026-05-07 02:45:44 [warning  ] missforest_did_not_converge    hint='raise max_iter or accept that small-N data is unstable' max_iter=21 n_iter_used=21
+2026-05-07 02:50:11 [info     ] serrf_drift_correction_done    correlation_pool=all max_depth=4 max_depth_auto=True median_oob_r2=0.574416501303513 min_samples_leaf=2 min_samples_leaf_auto=True n_corrected=4644 n_correlated_features=23 n_correlated_features_auto=True n_estimators=40 n_estimators_auto=True n_features=4644 n_pass_through_zero_var=0 n_qc=16 n_samples=47 oob_enabled=True
+2026-05-07 02:50:12 [info     ] mstus_normalisation_done       factor_max=1.1059262672242411 factor_median=1.0 factor_min=0.7819515340886588 n_factor_fallback=0 n_features=4644 n_samples=47 n_useful_features=4644 useful_min_pct=0.8
+2026-05-07 02:50:12 [info     ] glog_transformation_done       lambda_param=22.127159927195144 lambda_param_auto=True lambda_source=qc_median_sd n_features=4644 n_samples=47 output_max=17.587756045883435 output_median=8.175639050521996 output_min=3.467746430232873
+2026-05-07 02:50:35 [info     ] pareto_scaling_done            n_constant_features=0 n_features=4644 n_samples=47 per_feature_mean_after=1.388959869105515e-15 per_feature_sd_after_median=0.7175066182615083
+2026-05-07 02:50:35 [info     ] outlier_detection_done         alpha=0.05 dmodx_critical=1.017403690944826 explained_variance_total=0.7151229523311293 n_components=5 n_components_auto=True n_features=4644 n_outliers_dmodx=2 n_outliers_either=3 n_outliers_t2=1 n_samples=31 t_squared_critical=14.923788963822638
+2026-05-07 02:50:35 [warning  ] outliers_flagged               hint='add to parse.exclude_samples and `dvc repro` to re-run from Stage 1' n=3 sample_ids=['MCF7_7', 'MCF10A_3', 'UACC_6']
+2026-05-07 02:50:35 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-05-07 02:57:29 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=2926 n_tukey_computed=2926 tukey_post_hoc=auto
+2026-05-07 02:57:29 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-05-07 03:04:23 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=2926 n_tukey_computed=2926 tukey_post_hoc=auto
+2026-05-07 03:04:23 [info     ] plsda_fit_start                class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_classes=5 n_components=4 n_components_auto=True n_features=4644 n_samples=31
+2026-05-07 03:05:00 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=7 n_samples=31 top_k=46
+2026-05-07 03:05:11 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=0 n_features_p_lt_01=37 n_features_p_lt_05=307 n_permutation=1000
+2026-05-07 03:05:11 [info     ] plsda_fit_done                 elapsed_s=48.1 n_features_high_vip=1494 n_features_p_lt_05=307 n_features_stable=7
+2026-05-07 03:05:11 [info     ] splsda_fit_start               class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] keep_x=46 keep_x_auto=True n_classes=5 n_components=4 n_components_auto=True n_features=4644 n_samples=31
+2026-05-07 03:05:12 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=3 n_samples=31 top_k=46
+2026-05-07 03:05:23 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=7 n_features_p_lt_01=43 n_features_p_lt_05=85 n_permutation=1000
+2026-05-07 03:05:23 [info     ] splsda_fit_done                elapsed_s=11.3 n_features_high_vip=181 n_features_p_lt_05=85 n_features_stable=3 n_selected=181
+2026-05-07 03:05:23 [info     ] rf_fit_start                   class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_classes=5 n_estimators=310 n_estimators_auto=True n_features=4644 n_samples=31
+2026-05-07 03:24:20 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=0 n_samples=31 top_k=46
+2026-05-07 03:31:56 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=32 n_features_p_lt_01=143 n_features_p_lt_05=453 n_permutation=1000
+2026-05-07 03:31:56 [info     ] rf_fit_done                    elapsed_s=1593.5 n_features_high_gini=234 n_features_p_lt_05=453 n_features_stable=0
+2026-05-07 03:31:58 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.02 k=2 methods=['univariate', 'plsda', 'splsda', 'rf'] n_input_features=4644 n_methods_used=4 n_per_tier={'tier_1': 0, 'tier_2': 6, 'tier_3': 2920, 'none': 1718} n_shortlisted=6
+2026-05-07 03:31:58 [info     ] shortlist_written              n_features=4644 n_passed=6 output_dir=data/reports/multiverse/path_b_robust_ml
+2026-05-07 03:31:59 [info     ] path_report_written            export_png=False n_figures=55 n_sections=11 output_dir=data/reports/multiverse/path_b_robust_ml path=path_b_robust_ml
+2026-05-07 03:31:59 [info     ] path_run_done                  elapsed_s=37669.8 n_per_tier={'tier_1': 0, 'tier_2': 6, 'tier_3': 2920, 'none': 1718} n_shortlisted=6 path=path_b_robust_ml
+2026-05-07 03:31:59 [info     ] multiverse_path_start          i=2 n_total=3 path=path_c_mnar_aware
+2026-05-07 03:31:59 [info     ] path_run_start                 chain=['qrilc', 'qc_rsc', 'pqn', 'glog', 'pareto'] n_bootstrap=100 n_permutation=1000 path=path_c_mnar_aware
+2026-05-07 03:32:00 [info     ] qrilc_imputation_done          lod_quantile=0.01 min_observations=4 min_observations_auto=True n_fallback_halfmin=0 n_fallback_zero=0 n_features=4644 n_missing_filled=1602 n_qrilc_filled=1602 n_zero_treated_as_missing=1602 treat_zero_as_missing=True
+2026-05-07 03:32:06 [info     ] qc_rsc_drift_correction_done   correction_cap=10.0 n_cells_capped=189 n_corrected=4644 n_fallback_median=0 n_features=4644 n_features_capped=23 n_pass_through_zero_var=0 n_qc=16 n_samples=47 n_samples_extrapolated_to_boundary=0 qc_position_range=(3.0, 49.0) smoothing_factor=0.375 smoothing_factor_auto=True spline_order=3
+2026-05-07 03:32:06 [warning  ] qc_rsc_correction_capped       correction_cap=10.0 hint='spline overshoot detected — drift estimate clipped to prevent runaway scaling' n_cells_capped=189 n_features_capped=23
+2026-05-07 03:32:06 [info     ] pqn_normalisation_done         factor_max=1.0626776092560322 factor_median=0.9277383343436161 factor_min=0.6555640098637189 min_features_for_factor=46 min_features_for_factor_auto=True n_factor_fallback=0 n_features=4644 n_qc_for_reference=16 n_samples=47 n_valid_features_in_reference=4644 reference_used=qc_median
+2026-05-07 03:32:06 [info     ] glog_transformation_done       lambda_param=29.265191551048986 lambda_param_auto=True lambda_source=qc_median_sd n_features=4644 n_samples=47 output_max=17.78813337340819 output_median=8.281554534348945 output_min=3.8711138171372004
+2026-05-07 03:32:30 [info     ] pareto_scaling_done            n_constant_features=0 n_features=4644 n_samples=47 per_feature_mean_after=1.295653891504039e-15 per_feature_sd_after_median=0.7882210968515595
+2026-05-07 03:32:30 [info     ] outlier_detection_done         alpha=0.05 dmodx_critical=1.017403690944826 explained_variance_total=0.7604482230589837 n_components=5 n_components_auto=True n_features=4644 n_outliers_dmodx=4 n_outliers_either=4 n_outliers_t2=1 n_samples=31 t_squared_critical=14.923788963822638
+2026-05-07 03:32:30 [warning  ] outliers_flagged               hint='add to parse.exclude_samples and `dvc repro` to re-run from Stage 1' n=4 sample_ids=['MCF7_7', 'SKBR3_2', 'UACC_4', 'UACC_6']
+2026-05-07 03:32:30 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-05-07 03:40:07 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=3183 n_tukey_computed=3183 tukey_post_hoc=auto
+2026-05-07 03:40:07 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-05-07 03:47:43 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=3183 n_tukey_computed=3183 tukey_post_hoc=auto
+2026-05-07 03:47:44 [info     ] plsda_fit_start                class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_classes=5 n_components=4 n_components_auto=True n_features=4644 n_samples=31
+2026-05-07 03:48:20 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=20 n_samples=31 top_k=46
+2026-05-07 03:48:30 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=0 n_features_p_lt_01=38 n_features_p_lt_05=310 n_permutation=1000
+2026-05-07 03:48:30 [info     ] plsda_fit_done                 elapsed_s=46.2 n_features_high_vip=1453 n_features_p_lt_05=310 n_features_stable=20
+2026-05-07 03:48:30 [info     ] splsda_fit_start               class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] keep_x=46 keep_x_auto=True n_classes=5 n_components=4 n_components_auto=True n_features=4644 n_samples=31
+2026-05-07 03:48:31 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=11 n_samples=31 top_k=46
+2026-05-07 03:48:41 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=2 n_features_p_lt_01=26 n_features_p_lt_05=87 n_permutation=1000
+2026-05-07 03:48:41 [info     ] splsda_fit_done                elapsed_s=10.7 n_features_high_vip=184 n_features_p_lt_05=87 n_features_stable=11 n_selected=184
+2026-05-07 03:48:41 [info     ] rf_fit_start                   class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_classes=5 n_estimators=310 n_estimators_auto=True n_features=4644 n_samples=31
+2026-05-07 04:06:42 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=0 n_samples=31 top_k=46
+2026-05-07 04:14:16 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=21 n_features_p_lt_01=162 n_features_p_lt_05=468 n_permutation=1000
+2026-05-07 04:14:16 [info     ] rf_fit_done                    elapsed_s=1535.2 n_features_high_gini=233 n_features_p_lt_05=468 n_features_stable=0
+2026-05-07 04:14:18 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.02 k=2 methods=['univariate', 'plsda', 'splsda', 'rf'] n_input_features=4644 n_methods_used=4 n_per_tier={'tier_1': 3, 'tier_2': 17, 'tier_3': 3163, 'none': 1461} n_shortlisted=20
+2026-05-07 04:14:18 [info     ] shortlist_written              n_features=4644 n_passed=20 output_dir=data/reports/multiverse/path_c_mnar_aware
+2026-05-07 04:14:19 [info     ] path_report_written            export_png=False n_figures=55 n_sections=11 output_dir=data/reports/multiverse/path_c_mnar_aware path=path_c_mnar_aware
+2026-05-07 04:14:19 [info     ] path_run_done                  elapsed_s=2539.9 n_per_tier={'tier_1': 3, 'tier_2': 17, 'tier_3': 3163, 'none': 1461} n_shortlisted=20 path=path_c_mnar_aware
+2026-05-07 04:14:19 [info     ] multiverse_path_start          i=3 n_total=3 path=path_d_middle
+2026-05-07 04:14:19 [info     ] path_run_start                 chain=['ns_knn', 'serrf', 'median', 'log2', 'pareto'] n_bootstrap=100 n_permutation=1000 path=path_d_middle
+2026-05-07 04:14:19 [info     ] ns_knn_imputation_done         k=20 k_auto=True n_features=4644 n_missing_filled=1602 n_samples=47 n_zero_treated_as_missing=1602 treat_zero_as_missing=True weights=uniform
+2026-05-07 04:18:09 [info     ] serrf_drift_correction_done    correlation_pool=all max_depth=4 max_depth_auto=True median_oob_r2=0.5744963060391941 min_samples_leaf=2 min_samples_leaf_auto=True n_corrected=4644 n_correlated_features=23 n_correlated_features_auto=True n_estimators=40 n_estimators_auto=True n_features=4644 n_pass_through_zero_var=0 n_qc=16 n_samples=47 oob_enabled=True
+2026-05-07 04:18:09 [info     ] median_normalisation_done      factor_max=1.1674037495857499 factor_median=1.0 factor_min=0.5493228576992867 global_reference_median=290.0368849368102 n_features=4644 n_samples=47 n_samples_all_zero_fallback=0
+2026-05-07 04:18:09 [info     ] log2_transformation_done       epsilon=4.009785167334539e-07 epsilon_auto=True n_features=4644 n_samples=47 output_max=18.097180907743923 output_median=8.180092519975629 output_min=-19.665009220157746
+2026-05-07 04:18:32 [info     ] pareto_scaling_done            n_constant_features=0 n_features=4644 n_samples=47 per_feature_mean_after=1.2732132133467221e-15 per_feature_sd_after_median=0.7471399810459283
+2026-05-07 04:18:32 [info     ] outlier_detection_done         alpha=0.05 dmodx_critical=1.017403690944826 explained_variance_total=0.6938212367436021 n_components=5 n_components_auto=True n_features=4644 n_outliers_dmodx=4 n_outliers_either=5 n_outliers_t2=1 n_samples=31 t_squared_critical=14.923788963822638
+2026-05-07 04:18:32 [warning  ] outliers_flagged               hint='add to parse.exclude_samples and `dvc repro` to re-run from Stage 1' n=5 sample_ids=['MCF7_7', 'MCF10A_3', 'MDAMB231_2', 'UACC_4', 'UACC_6']
+2026-05-07 04:18:32 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-05-07 04:25:38 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=2979 n_tukey_computed=2979 tukey_post_hoc=auto
+2026-05-07 04:25:38 [info     ] univariate_groups_resolved     group_counts={'MCF10A': 6, 'MCF7': 7, 'MDAMB231': 6, 'SKBR3': 6, 'UACC': 6} group_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_groups=5
+2026-05-07 04:32:43 [info     ] univariate_done                is_log_scale_input=True is_log_scale_override=True n_features=4644 n_groups=5 n_significant_at_q05=2979 n_tukey_computed=2979 tukey_post_hoc=auto
+2026-05-07 04:32:44 [info     ] plsda_fit_start                class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_classes=5 n_components=4 n_components_auto=True n_features=4644 n_samples=31
+2026-05-07 04:33:20 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=5 n_samples=31 top_k=46
+2026-05-07 04:33:32 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=0 n_features_p_lt_01=40 n_features_p_lt_05=320 n_permutation=1000
+2026-05-07 04:33:32 [info     ] plsda_fit_done                 elapsed_s=48.3 n_features_high_vip=1437 n_features_p_lt_05=320 n_features_stable=5
+2026-05-07 04:33:32 [info     ] splsda_fit_start               class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] keep_x=46 keep_x_auto=True n_classes=5 n_components=4 n_components_auto=True n_features=4644 n_samples=31
+2026-05-07 04:33:33 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=2 n_samples=31 top_k=46
+2026-05-07 04:33:45 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=0 n_features_p_lt_01=32 n_features_p_lt_05=84 n_permutation=1000
+2026-05-07 04:33:45 [info     ] splsda_fit_done                elapsed_s=12.7 n_features_high_vip=179 n_features_p_lt_05=84 n_features_stable=2 n_selected=179
+2026-05-07 04:33:45 [info     ] rf_fit_start                   class_names=['MCF10A', 'MCF7', 'MDAMB231', 'SKBR3', 'UACC'] n_classes=5 n_estimators=310 n_estimators_auto=True n_features=4644 n_samples=31
+2026-05-07 04:51:36 [info     ] bootstrap_stability_done       n_bootstrap=100 n_features=4644 n_features_consistently_in_top_k=0 n_samples=31 top_k=46
+2026-05-07 04:59:11 [info     ] permutation_test_done          n_features=4644 n_features_p_lt_001=32 n_features_p_lt_01=156 n_features_p_lt_05=444 n_permutation=1000
+2026-05-07 04:59:11 [info     ] rf_fit_done                    elapsed_s=1525.6 n_features_high_gini=233 n_features_p_lt_05=444 n_features_stable=0
+2026-05-07 04:59:12 [info     ] shortlist_computed             combination=k_of_n elapsed_s=0.02 k=2 methods=['univariate', 'plsda', 'splsda', 'rf'] n_input_features=4644 n_methods_used=4 n_per_tier={'tier_1': 0, 'tier_2': 4, 'tier_3': 2975, 'none': 1665} n_shortlisted=4
+2026-05-07 04:59:12 [info     ] shortlist_written              n_features=4644 n_passed=4 output_dir=data/reports/multiverse/path_d_middle
+2026-05-07 04:59:13 [info     ] path_report_written            export_png=False n_figures=55 n_sections=11 output_dir=data/reports/multiverse/path_d_middle path=path_d_middle
+2026-05-07 04:59:13 [info     ] path_run_done                  elapsed_s=2694.3 n_per_tier={'tier_1': 0, 'tier_2': 4, 'tier_3': 2975, 'none': 1665} n_shortlisted=4 path=path_d_middle
+2026-05-07 04:59:13 [info     ] multiverse_run_done            elapsed_s=42904.0 n_failed=0 n_paths=3 n_succeeded=3
+
+[04:59:13] all paths gathered: 4/4 succeeded
+   ✓ path_a_classical: shortlisted 14
+   ✓ path_b_robust_ml: shortlisted 6
+   ✓ path_c_mnar_aware: shortlisted 20
+   ✓ path_d_middle: shortlisted 4
+
+[04:59:13] computing multiverse consensus (threshold = 0.5)...
+2026-05-07 04:59:13 [info     ] consensus_computed             elapsed_s=0.05 n_consensus=15 n_features=4644 n_paths=4 n_per_tier={'tier_1': 3, 'tier_2': 12, 'tier_3': 10, 'none': 4619} threshold=0.5
+2026-05-07 04:59:14 [info     ] consensus_written              n_consensus=15 n_features=4644 output_dir=data/reports/multiverse
+[04:59:14] consensus: 15 features pass (≥50% of 4 paths)
+   tiers: {'tier_1': 3, 'tier_2': 12, 'tier_3': 10, 'none': 4619}
+   parquet: data/reports/multiverse/consensus.parquet
+
+[04:59:14] building multiverse index page...
+2026-05-07 04:59:14 [info     ] path_report_written            export_png=False n_figures=4 n_sections=8 output_dir=data/reports/multiverse path=multiverse
+2026-05-07 04:59:14 [info     ] multiverse_index_written       n_consensus=15 n_paths=4 output=data/reports/multiverse/index.html
+   landing page: data/reports/multiverse/index.html
+
+[04:59:14] === RESUME DONE in 715.1 min (11.92 hr) ===

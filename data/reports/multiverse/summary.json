@@ -1,0 +1,140 @@
+{
+  "name": "multiverse",
+  "title": "Multiverse biomarker discovery \u2014 overview",
+  "path_chain": [
+    "imputation\u2208{halfmin,missforest,ns_knn,qrilc}",
+    "drift\u2208{qc_rsc,serrf}",
+    "normalisation\u2208{median,mstus,pqn}",
+    "transformation\u2208{glog,log2}",
+    "scaling=pareto"
+  ],
+  "created_at": "2026-05-07T09:29:06",
+  "n_sections": 8,
+  "n_figures": 4,
+  "sections": [
+    {
+      "name": "overview",
+      "title": "Multiverse summary",
+      "method": "",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "n_paths_total",
+          "value": 4,
+          "unit": ""
+        },
+        {
+          "name": "n_paths_succeeded",
+          "value": 4,
+          "unit": ""
+        },
+        {
+          "name": "n_features",
+          "value": "4,644",
+          "unit": ""
+        },
+        {
+          "name": "n_consensus",
+          "value": 15,
+          "unit": ""
+        },
+        {
+          "name": "tier_1",
+          "value": 3,
+          "unit": ""
+        },
+        {
+          "name": "tier_2",
+          "value": 12,
+          "unit": ""
+        },
+        {
+          "name": "tier_3",
+          "value": 10,
+          "unit": ""
+        }
+      ],
+      "n_figures": 0,
+      "n_tables": 0
+    },
+    {
+      "name": "paths",
+      "title": "Paths in this multiverse",
+      "method": "",
+      "parameters": {},
+      "metrics": [],
+      "n_figures": 0,
+      "n_tables": 1
+    },
+    {
+      "name": "specification_curve",
+      "title": "Specification curve",
+      "method": "",
+      "parameters": {},
+      "metrics": [],
+      "n_figures": 1,
+      "n_tables": 0
+    },
+    {
+      "name": "agreement",
+      "title": "Cross-path agreement (Jaccard)",
+      "method": "",
+      "parameters": {},
+      "metrics": [],
+      "n_figures": 1,
+      "n_tables": 0
+    },
+    {
+      "name": "tiers",
+      "title": "Consensus tier breakdown",
+      "method": "",
+      "parameters": {},
+      "metrics": [],
+      "n_figures": 1,
+      "n_tables": 0
+    },
+    {
+      "name": "top_features",
+      "title": "Top 30 consensus features",
+      "method": "",
+      "parameters": {},
+      "metrics": [],
+      "n_figures": 0,
+      "n_tables": 1
+    },
+    {
+      "name": "method_drilldown",
+      "title": "Method evidence drilldown \u2014 top 30 consensus features",
+      "method": "",
+      "parameters": {},
+      "metrics": [],
+      "n_figures": 1,
+      "n_tables": 0
+    },
+    {
+      "name": "methods",
+      "title": "Methods + reproducibility",
+      "method": "",
+      "parameters": {},
+      "metrics": [
+        {
+          "name": "consensus_threshold",
+          "value": 0.5,
+          "unit": ""
+        },
+        {
+          "name": "n_bootstrap",
+          "value": "?",
+          "unit": ""
+        },
+        {
+          "name": "n_permutation",
+          "value": "?",
+          "unit": ""
+        }
+      ],
+      "n_figures": 0,
+      "n_tables": 1
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+[17:49:12] === AUTO-CHAIN STARTED ===
+[17:49:12] waiting for smoke test to complete...
+[18:15:12] smoke test reached terminal state
+[18:15:12] smoke peak RSS: 12.74 GB
+[18:15:12] ✗ Peak RSS exceeded 12 GB safety threshold — production NOT launched

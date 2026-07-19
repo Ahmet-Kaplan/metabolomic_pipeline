@@ -1,0 +1,25 @@
+n_features_evaluated (total union): 111456
+path_a_classical,ANOVA (η²),PLS-DA (VIP),0.4945,0.6841
+path_a_classical,ANOVA (η²),sPLS-DA (selected),0.1931,0.2364
+path_a_classical,ANOVA (η²),RF (Gini),0.3206,0.4082
+path_a_classical,PLS-DA (VIP),sPLS-DA (selected),0.2615,0.3202
+path_a_classical,PLS-DA (VIP),RF (Gini),0.2539,0.3263
+path_a_classical,sPLS-DA (selected),RF (Gini),0.1314,0.1386
+path_b_robust_ml,ANOVA (η²),PLS-DA (VIP),0.5208,0.7146
+path_b_robust_ml,ANOVA (η²),sPLS-DA (selected),0.1241,0.152
+path_b_robust_ml,ANOVA (η²),RF (Gini),0.3203,0.4079
+path_b_robust_ml,PLS-DA (VIP),sPLS-DA (selected),0.1671,0.2047
+path_b_robust_ml,PLS-DA (VIP),RF (Gini),0.2558,0.329
+path_b_robust_ml,sPLS-DA (selected),RF (Gini),0.1038,0.1094
+path_c_mnar_aware,ANOVA (η²),PLS-DA (VIP),0.5373,0.7302
+path_c_mnar_aware,ANOVA (η²),sPLS-DA (selected),0.2193,0.2686
+path_c_mnar_aware,ANOVA (η²),RF (Gini),0.3166,0.4033
+path_c_mnar_aware,PLS-DA (VIP),sPLS-DA (selected),0.2688,0.3292
+path_c_mnar_aware,PLS-DA (VIP),RF (Gini),0.2627,0.3373
+path_c_mnar_aware,sPLS-DA (selected),RF (Gini),0.1311,0.1382
+path_d_middle,ANOVA (η²),PLS-DA (VIP),0.491,0.6803
+path_d_middle,ANOVA (η²),sPLS-DA (selected),0.1692,0.2072
+path_d_middle,ANOVA (η²),RF (Gini),0.3131,0.399
+path_d_middle,PLS-DA (VIP),sPLS-DA (selected),0.2604,0.3189
+path_d_middle,PLS-DA (VIP),RF (Gini),0.2557,0.3278
+path_d_middle,sPLS-DA (selected),RF (Gini),0.135,0.1422

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stage 9 — Identification candidate ranking (annotation-only) — Biomarker Discovery MLOps</title>
+<style>
+  :root {
+    --navy: #0b2545;
+    --navy-2: #13315c;
+    --blue: #1e4377;
+    --accent: #c9a94e;
+    --paper: #f6f8fb;
+    --border: #d6dde6;
+    --text: #1a1a1a;
+    --muted: #555;
+  }
+  body {
+    font-family: "Source Sans Pro", "Helvetica Neue", sans-serif;
+    background: var(--paper); color: var(--text);
+    margin: 0; padding: 0; line-height: 1.55;
+  }
+  header.top {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; padding: 3rem 2rem;
+  }
+  header.top h1 { margin: 0 0 .3em 0; font-weight: 700; font-size: 2.1rem; }
+  header.top p  { margin: 0; color: #a8c4e6; font-size: 1.05rem; }
+  main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+  table.info {
+    border-collapse: collapse; margin: 1.5em 0; font-size: .95rem;
+  }
+  table.info th { background: var(--navy); color: #fff; padding: .4em .8em; text-align: left; }
+  table.info td { padding: .4em .8em; border-bottom: 1px solid var(--border); }
+  .cards {
+    display: grid; gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    margin-top: 2rem;
+  }
+  .card {
+    background: #fff; border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.3rem; box-shadow: 0 1px 3px rgba(11, 37, 69, .06);
+  }
+  .card header { display:flex; justify-content:space-between; align-items:baseline; }
+  .card h2 { margin: 0; font-size: 1.08rem; color: var(--navy); }
+  .card .tag { font-size: .78rem; color: var(--muted); font-family: ui-monospace, monospace; }
+  .card p  { color: var(--muted); font-size: .92rem; margin: .7em 0 1em; }
+  .card footer { display: flex; gap: .8em; }
+  .card a {
+    padding: .35em .8em; border-radius: 3px; text-decoration: none; font-size: .88rem;
+  }
+  .card a.primary { background: var(--navy); color: #fff; }
+  .card a.primary:hover { background: var(--blue); }
+  .card a.png { background: #eee; color: var(--text); }
+  footer.foot {
+    padding: 2rem; text-align: center; color: var(--muted); font-size: .85rem;
+    border-top: 1px solid var(--border); margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Biomarker Discovery MLOps</h1>
+  <p>Stage 9 — Identification candidate ranking (annotation-only)</p>
+</header>
+<main>
+  <table class='info'><tr><th>Input features (Stage-8-active)</th><td>4,799</td></tr><tr><th>  • With Progenesis candidate(s)</th><td>2,962</td></tr><tr><th>  • No candidate (auto L4)</th><td>1,837</td></tr><tr><th>MSI L2 (unique annotation)</th><td>1,323</td></tr><tr><th>MSI L3 (compound class)</th><td>948</td></tr><tr><th>MSI L4 (no floor survivor)</th><td>691</td></tr><tr><th>MSI L4 (no candidate)</th><td>1,837</td></tr><tr><th>Single after quality floor</th><td>441</td></tr><tr><th>Resolved at Step 1 (Score)</th><td>766</td></tr><tr><th>Resolved at Step 2 (Frag Score)</th><td>80</td></tr><tr><th>Resolved at Step 3 (Mass error)</th><td>36</td></tr><tr><th>Still tied after all 3 steps</th><td>948</td></tr><tr><th>Quality floor</th><td>Score ≥ 30 AND |ppm| ≤ 5</td></tr><tr><th>Note</th><td>Stage 9 is annotation-only — every active feature passes through. L4 features are not dropped; they proceed to downstream stages without an annotation, where stats may still flag them as biomarkers.</td></tr></table>
+  <div class="cards">
+    <article class="card">
+  <header>
+    <h2>1. MSI tier distribution</h2>
+    <span class="tag">01_msi_breakdown</span>
+  </header>
+  <p>Each active feature is assigned to exactly one MSI tier: <b>L2</b> (single putative annotation surviving the cascade), <b>L3</b> (compound class — multiple equally-good candidates remain after Score / Frag / Mass-error tiebreaks; biologist decides), or <b>L4</b> (no annotation — either no candidate cleared the quality floor, or no Progenesis candidate exists for this feature).</p>
+  <footer>
+    <a class="primary" href="plots/01_msi_breakdown.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/01_msi_breakdown.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>2. Cascade resolution breakdown</h2>
+    <span class="tag">02_resolution_funnel</span>
+  </header>
+  <p>Where did the cascade do its work? Most compounds resolve trivially (single candidate after the quality floor) or at Step 1 (max Score). A small fraction need Step 2 (Fragmentation Score) or Step 3 (min |Mass error|) to break ties. The remainder are honestly reported as L3 ambiguous (compound class only) or L4 unannotated.</p>
+  <footer>
+    <a class="primary" href="plots/02_resolution_funnel.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/02_resolution_funnel.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>3. Top-20 highest-Score L2 annotations</h2>
+    <span class="tag">03_top_l2</span>
+  </header>
+  <p>The 20 most-confident single-candidate annotations in the dataset, ranked by Progenesis Score. Hover for fragmentation score, mass error, and compound ID. These are your strongest putative IDs heading into stats and shortlist.</p>
+  <footer>
+    <a class="primary" href="plots/03_top_l2.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/03_top_l2.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>4. Top-20 most-ambiguous L3 features (watch list)</h2>
+    <span class="tag">04_top_l3_ambiguous</span>
+  </header>
+  <p>The 20 features with the most surviving candidates after the cascade — your biologist watch-list. High counts typically mean cross-database duplicates of the same molecule (HMDB + ChemSpider) or genuine isomer families that LC-MS cannot physically distinguish (e.g., lipid positional isomers). Compound class is the honest annotation here.</p>
+  <footer>
+    <a class="primary" href="plots/04_top_l3_ambiguous.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/04_top_l3_ambiguous.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>5. Score distribution by MSI tier</h2>
+    <span class="tag">05_score_by_tier</span>
+  </header>
+  <p>Boxplot of top Progenesis Score for L2 vs L3 features. If L3 medians cluster near the floor (Score ≈ 30), the floor may be too lenient — low-quality candidates are entering the cascade. If L3 medians are close to L2's, the ambiguity is high-quality (genuine isomer/database duplication) and the floor is well-calibrated.</p>
+  <footer>
+    <a class="primary" href="plots/05_score_by_tier.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/05_score_by_tier.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>6. Mass-error |ppm| distribution of kept annotations</h2>
+    <span class="tag">06_ppm_distribution</span>
+  </header>
+  <p>Distribution of |mass error| for L2 + L3 kept annotations, with the quality-floor line overlaid. A healthy Q-TOF run puts the bulk well below the floor (typically < 2 ppm). If many surviving annotations sit close to the floor, the instrument may be drifting or miscalibrated.</p>
+  <footer>
+    <a class="primary" href="plots/06_ppm_distribution.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/06_ppm_distribution.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>7. L4-no-floor-survivor failure diagnostic</h2>
+    <span class="tag">07_floor_failure_breakdown</span>
+  </header>
+  <p>For features whose candidates ALL failed the quality floor, which gate did the work? Score-fail-only candidates would be rescued by lowering the Score floor; |ppm|-fail-only by loosening the mass-error floor. Cross-fails have near-passes on each axis but on different candidates. Both-fail features are genuinely junk-quality with no realistic rescue path. If one bar dominates, the corresponding floor may be too tight.</p>
+  <footer>
+    <a class="primary" href="plots/07_floor_failure_breakdown.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/07_floor_failure_breakdown.png" target="_blank">PNG</a>
+  </footer>
+</article>
+  </div>
+</main>
+<footer class="foot">
+  Generated 2026-04-28 13:21 UTC · Stage 2 is strictly diagnostic — no features or samples are dropped.
+</footer>
+</body>
+</html>

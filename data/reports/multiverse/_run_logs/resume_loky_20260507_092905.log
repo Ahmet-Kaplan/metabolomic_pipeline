@@ -1,0 +1,34 @@
+[09:29:06] === RESUME PRODUCTION MULTIVERSE RUN ===
+[09:29:06] BLAS thread caps applied: OMP/OPENBLAS/MKL/BLIS/NUMEXPR_NUM_THREADS=1
+[09:29:06] missForest n_jobs uses _auto_n_jobs() (leaves 4 cores for OS)
+[09:29:06] persistent log: data/reports/multiverse/_run_logs/resume_20260507_092906.log
+[09:29:06] N_BOOTSTRAP=100, N_PERMUTATION=1000
+   ✓ already complete: path_a_classical
+   ✓ already complete: path_b_robust_ml
+   ✓ already complete: path_c_mnar_aware
+   ✓ already complete: path_d_middle
+
+[09:29:06] All 4 paths already complete; just re-aggregating consensus.
+
+[09:29:06] loading real data...
+  loaded: 4,644 features × 47 samples; run_order: 53
+
+[09:29:06] all paths gathered: 4/4 succeeded
+   ✓ path_a_classical: shortlisted 14
+   ✓ path_b_robust_ml: shortlisted 6
+   ✓ path_c_mnar_aware: shortlisted 20
+   ✓ path_d_middle: shortlisted 4
+
+[09:29:06] computing multiverse consensus (threshold = 0.5)...
+2026-05-07 09:29:06 [info     ] consensus_computed             elapsed_s=0.02 n_consensus=15 n_features=4644 n_paths=4 n_per_tier={'tier_1': 3, 'tier_2': 12, 'tier_3': 10, 'none': 4619} threshold=0.5
+2026-05-07 09:29:06 [info     ] consensus_written              n_consensus=15 n_features=4644 output_dir=data/reports/multiverse
+[09:29:06] consensus: 15 features pass (≥50% of 4 paths)
+   tiers: {'tier_1': 3, 'tier_2': 12, 'tier_3': 10, 'none': 4619}
+   parquet: data/reports/multiverse/consensus.parquet
+
+[09:29:06] building multiverse index page...
+2026-05-07 09:29:07 [info     ] path_report_written            export_png=False n_figures=4 n_sections=8 output_dir=data/reports/multiverse path=multiverse
+2026-05-07 09:29:07 [info     ] multiverse_index_written       n_consensus=15 n_paths=4 output=data/reports/multiverse/index.html
+   landing page: data/reports/multiverse/index.html
+
+[09:29:07] === RESUME DONE in 0.0 min (0.00 hr) ===

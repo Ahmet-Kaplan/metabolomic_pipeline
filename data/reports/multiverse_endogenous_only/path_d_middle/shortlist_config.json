@@ -1,0 +1,41 @@
+{
+  "method_gates": {
+    "univariate": {
+      "rules": {
+        "q_threshold": 0.05,
+        "eta_threshold": 0.14
+      }
+    },
+    "plsda": {
+      "rules": {
+        "vip_threshold": 1.0,
+        "stability_threshold": 0.8,
+        "perm_p_threshold": 0.05
+      }
+    },
+    "splsda": {
+      "rules": {
+        "stability_threshold": 0.8,
+        "perm_p_threshold": 0.05
+      }
+    },
+    "rf": {
+      "rules": {
+        "stability_threshold": 0.8,
+        "perm_p_threshold": 0.05
+      }
+    }
+  },
+  "combination": "k_of_n",
+  "k": 2,
+  "weights": null,
+  "n_input_features": 905,
+  "n_shortlisted": 2,
+  "n_per_tier": {
+    "tier_1": 0,
+    "tier_2": 2,
+    "tier_3": 635,
+    "none": 268
+  },
+  "runtime_seconds": 0.015481710433959961
+}

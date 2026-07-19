@@ -1,0 +1,16 @@
+feature_id,consensus_tier,n_paths_flagging,frac_paths_flagging,per_path_flag_path_a_classical,per_path_flag_path_b_robust_ml,per_path_flag_path_c_mnar_aware,per_path_flag_path_d_middle,msi_tier,outcome,top_compound_name,top_formula,top_ppm,had_msms,best_univariate_q,max_univariate_eta_sq,max_plsda_vip,xenobiotic_flag,is_endogenous_candidate
+10.76_1918.0639n,tier_1,4,1.0,True,True,True,True,3,l3_ambiguous,Ganglioside GD1a (d18:1/24:1(15Z)),C91H159N3O39,4.60376345816963,True,2.3733941929141525e-22,0.9869635813743768,4.67502131865429,,True
+10.55_1761.0087n,tier_1,3,0.75,False,True,True,True,4,l4_no_candidate,,,,False,1.8876123411250342e-17,0.9666101698514675,3.692734973254916,,True
+2.37_343.0578n,tier_1,3,0.75,False,True,True,True,2,l2_unique,N-[4-Chloro-3-(trifluoromethyl)phenyl]-2-ethoxybenzamide,C16H13ClF3NO2,-2.48869612134012,True,4.368020760208616e-22,0.9862819674089963,3.0734652393479895,"halogenated synthetic (Cl, F3); not endogenous",False
+10.78_1702.0105n,tier_2,2,0.5,False,True,True,False,4,l4_no_candidate,,,,False,1.0816600016424695e-15,0.9531402612442795,3.2689445058392965,,True
+10.81_1498.8843n,tier_2,2,0.5,True,False,True,False,4,l4_no_floor_survivor,,,,True,8.172478312995904e-22,0.9855737922136696,3.786783446469193,,True
+2.37_703.0737m/z,tier_2,2,0.5,False,True,True,False,3,l3_ambiguous,Meloxicam,C14H13N3O4S2,-4.43962789833255,True,6.855459698193525e-25,0.9921421052605213,3.0311488611421153,Meloxicam (NSAID) 2M+H homodimer,False
+4.03_659.2403n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,5.748991281858941e-44,0.999798818215023,4.740812028972174,,True
+4.03_675.2058n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,3.120652217354902e-37,0.9992296924620905,3.889723475529719,,True
+4.03_691.1686n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,1.6575042810554084e-30,0.997298126402045,3.4439780287823947,,True
+4.49_583.1440n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,1.0034990677785943e-29,0.9972285368118788,3.460071668493794,,True
+4.49_599.1149n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,1.3259558056975614e-31,0.9981041995796897,4.272202726769424,,True
+8.12_938.3263n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,6.191723594947839e-42,0.9996958606498089,4.418414298230411,,True
+8.13_900.3844n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,1.939846346742119e-40,0.9995818752984043,5.146496364751557,,True
+8.24_1273.7281n,tier_2,2,0.5,True,False,True,False,4,l4_no_candidate,,,,False,1.543419257573382e-18,0.9728132755914828,3.1994350008819334,,True
+8.96_1386.8145n,tier_2,2,0.5,False,True,True,False,4,l4_no_candidate,,,,False,2.8730680607187904e-20,0.9804433648517953,3.4753246822242945,,True

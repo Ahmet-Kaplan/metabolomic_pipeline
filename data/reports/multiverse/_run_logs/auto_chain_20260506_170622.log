@@ -1,0 +1,13 @@
+[17:06:22] === SERVER AUTO-CHAIN STARTED ===
+[17:06:22] waiting for production process PID 2149414 to finish...
+[04:59:24] production process exited
+[04:59:24] per-path completion:
+    path_a_classical: shortlist=OK  index=OK
+    path_b_robust_ml: shortlist=OK  index=OK
+    path_c_mnar_aware: shortlist=OK  index=OK
+    path_d_middle: shortlist=OK  index=OK
+[04:59:24] running audit (verify_multiverse.py)...
+[04:59:24] audit done: 46 passed / 0
+0 failed (rc=0)
+[04:59:24] audit log: data/reports/multiverse/_run_logs/audit_20260506_170622.log
+[04:59:24] === SERVER AUTO-CHAIN DONE ===

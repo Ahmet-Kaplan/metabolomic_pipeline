@@ -1,0 +1,5 @@
+dropped_path,n_consensus_without_path,n_full_consensus_retained,n_full_consensus_lost
+path_a_classical,6,6,9
+path_b_robust_ml,12,12,3
+path_c_mnar_aware,3,3,12
+path_d_middle,15,15,0

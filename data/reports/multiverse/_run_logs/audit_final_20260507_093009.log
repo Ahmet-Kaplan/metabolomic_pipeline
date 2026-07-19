@@ -1,0 +1,100 @@
+
+======================================================================
+PER-PATH OUTPUTS
+======================================================================
+  [32m✓[0m path_a_classical: directory exists: data/reports/multiverse/path_a_classical
+  [32m✓[0m path_a_classical: HTML report exists: data/reports/multiverse/path_a_classical/index.html
+  [32m✓[0m path_a_classical: shortlist parquet exists: data/reports/multiverse/path_a_classical/shortlist.parquet
+  [32m✓[0m path_b_robust_ml: directory exists: data/reports/multiverse/path_b_robust_ml
+  [32m✓[0m path_b_robust_ml: HTML report exists: data/reports/multiverse/path_b_robust_ml/index.html
+  [32m✓[0m path_b_robust_ml: shortlist parquet exists: data/reports/multiverse/path_b_robust_ml/shortlist.parquet
+  [32m✓[0m path_c_mnar_aware: directory exists: data/reports/multiverse/path_c_mnar_aware
+  [32m✓[0m path_c_mnar_aware: HTML report exists: data/reports/multiverse/path_c_mnar_aware/index.html
+  [32m✓[0m path_c_mnar_aware: shortlist parquet exists: data/reports/multiverse/path_c_mnar_aware/shortlist.parquet
+  [32m✓[0m path_d_middle: directory exists: data/reports/multiverse/path_d_middle
+  [32m✓[0m path_d_middle: HTML report exists: data/reports/multiverse/path_d_middle/index.html
+  [32m✓[0m path_d_middle: shortlist parquet exists: data/reports/multiverse/path_d_middle/shortlist.parquet
+
+======================================================================
+CONSENSUS FILES
+======================================================================
+  [32m✓[0m consensus_parquet exists: data/reports/multiverse/consensus.parquet
+  [32m✓[0m consensus_csv exists: data/reports/multiverse/consensus.csv
+  [32m✓[0m consensus_passed_parquet exists: data/reports/multiverse/consensus_passed.parquet
+  [32m✓[0m consensus_config exists: data/reports/multiverse/consensus_config.json
+
+======================================================================
+CONSENSUS SCHEMA
+======================================================================
+  [32m✓[0m consensus schema: 4,644 rows × 14 cols; missing columns: ∅
+
+======================================================================
+PER-PATH FLAG FIDELITY
+======================================================================
+  [32m✓[0m path_a_classical: per-path flag column matches shortlist: shortlist passed n=14, consensus column n=14; sets equal: True
+  [32m✓[0m path_b_robust_ml: per-path flag column matches shortlist: shortlist passed n=6, consensus column n=6; sets equal: True
+  [32m✓[0m path_c_mnar_aware: per-path flag column matches shortlist: shortlist passed n=20, consensus column n=20; sets equal: True
+  [32m✓[0m path_d_middle: per-path flag column matches shortlist: shortlist passed n=4, consensus column n=4; sets equal: True
+
+======================================================================
+CONSENSUS COUNTS + TIERS
+======================================================================
+  [32m✓[0m n_paths_total uniform: unique values in column: [np.int64(4)]; config: 4
+  [32m✓[0m n_paths_flagging matches per-path columns row-wise: checked 4,644 rows
+  [32m✓[0m frac_paths_flagging consistent: n_flag/n_total match every row
+  [32m✓[0m tier assignment matches definitions: tier_1 ≥0.75, tier_2 ≥0.5, tier_3 >0, none =0
+  [32m✓[0m passed_consensus matches threshold rule: threshold=0.5; checked 4,644 rows
+  [32m✓[0m n_consensus matches config: file n_passed=15; config n_consensus=15
+
+======================================================================
+CONSENSUS_PASSED PARQUET
+======================================================================
+  [32m✓[0m consensus_passed.parquet contains only flagged rows: n_rows=15; expected 15
+
+======================================================================
+CONFIG SIDECAR
+======================================================================
+  [32m✓[0m config path_names match expected: config: ['path_a_classical', 'path_b_robust_ml', 'path_c_mnar_aware', 'path_d_middle']; expected: ['path_a_classical', 'path_b_robust_ml', 'path_c_mnar_aware', 'path_d_middle']
+  [32m✓[0m n_paths_total plausible: n_paths_total=4 (range [1, 4])
+  [32m✓[0m n_per_tier non-empty: tiers: {'tier_1': 3, 'tier_2': 12, 'tier_3': 10, 'none': 4619}
+
+======================================================================
+MULTIVERSE CONSENSUS SUMMARY
+======================================================================
+  paths analysed: 4
+  threshold: 0.5
+  n_features total: 4,644
+  n_passed_consensus: 15
+  tier breakdown: {'tier_1': 3, 'tier_2': 12, 'tier_3': 10, 'none': 4619}
+
+  Top consensus features (sorted by frac):
+      feature_id  n_paths_flagging  frac_paths_flagging consensus_tier
+10.76_1918.0639n                 4                 1.00         tier_1
+10.55_1761.0087n                 3                 0.75         tier_1
+  2.37_343.0578n                 3                 0.75         tier_1
+10.78_1702.0105n                 2                 0.50         tier_2
+10.81_1498.8843n                 2                 0.50         tier_2
+2.37_703.0737m/z                 2                 0.50         tier_2
+  4.03_659.2403n                 2                 0.50         tier_2
+  4.03_675.2058n                 2                 0.50         tier_2
+  4.03_691.1686n                 2                 0.50         tier_2
+  4.49_583.1440n                 2                 0.50         tier_2
+
+======================================================================
+PHASE 8e.7 — MULTIVERSE INDEX PAGE
+======================================================================
+  [32m✓[0m index.html exists: data/reports/multiverse/index.html
+  [32m✓[0m summary.json sidecar exists: data/reports/multiverse/summary.json
+  [32m✓[0m figures/ directory exists: data/reports/multiverse/figures
+  [32m✓[0m all 8 sections present in HTML: missing: ∅
+  [32m✓[0m per-path hyperlinks resolve to real files: all 4 OK
+  [32m✓[0m n_consensus value on page matches consensus_config: expected '>15<' in HTML
+  [32m✓[0m top consensus feature appears in the table: feature: 10.76_1918.0639n
+  [32m✓[0m cites Steegen 2016: in HTML or footer
+  [32m✓[0m cites Simonsohn 2020: in HTML or footer
+  [32m✓[0m 4 figure blocks in index: counted: 4
+  [32m✓[0m standalone figure file 'specification*.html' exists: found: ['specification_curve_00_shortlist_size_per_path.html']
+  [32m✓[0m standalone figure file 'jaccard*.html' exists: found: ['agreement_00_pairwise_jaccard_heatmap.html']
+  [32m✓[0m standalone figure file 'tier*.html' exists: found: ['tiers_00_features_per_tier.html']
+  [32m✓[0m standalone figure file 'drilldown*.html' exists: found: ['method_drilldown_00_per_feature_method_evidence_per_path.html']
+  [32m✓[0m summary.json: n_sections=8, n_figures=4: got n_sections=8, n_figures=4

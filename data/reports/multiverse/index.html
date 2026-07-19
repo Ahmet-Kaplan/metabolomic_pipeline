@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiverse biomarker discovery — overview</title>
+
+<!-- plotly.js via CDN: loaded once for all embedded figures -->
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+<style>
+  :root {
+    --fg: #222;
+    --muted: #666;
+    --bg: #ffffff;
+    --bg-soft: #f7f7f7;
+    --accent: #0072B2;
+    --border: #d8d8d8;
+    --max-width: 1100px;
+    --sidebar-width: 230px;
+  }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    color: var(--fg);
+    background: var(--bg);
+    line-height: 1.55;
+    font-size: 14px;
+  }
+  header.report-header {
+    background: linear-gradient(180deg, #f8fafd 0%, #eef2f7 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 40px 20px;
+  }
+  header.report-header h1 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    color: #111;
+  }
+  header.report-header .meta {
+    color: var(--muted);
+    font-size: 12px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .path-chain {
+    margin-top: 10px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+  }
+  .path-chain .step {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-right: 4px;
+    color: #333;
+  }
+  .path-chain .arrow { color: var(--muted); margin: 0 2px; }
+  .layout {
+    display: flex;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  nav.sidebar {
+    width: var(--sidebar-width);
+    flex: 0 0 auto;
+    border-right: 1px solid var(--border);
+    padding: 20px 12px 20px 0;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: 100vh;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+  nav.sidebar h3 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  nav.sidebar a {
+    display: block;
+    padding: 4px 8px;
+    color: var(--fg);
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  nav.sidebar a:hover { background: var(--bg-soft); color: var(--accent); }
+  main.content {
+    flex: 1 1 auto;
+    padding: 24px 0 24px 24px;
+    min-width: 0;
+  }
+  section.report-section {
+    margin-bottom: 56px;
+    scroll-margin-top: 16px;
+  }
+  section.report-section h2 {
+    font-size: 18px;
+    color: #111;
+    margin: 0 0 4px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+  }
+  section.report-section .method-line {
+    color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  section.report-section .description {
+    color: #444;
+    margin-bottom: 14px;
+  }
+  details.params {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+  details.params summary {
+    cursor: pointer;
+    color: var(--muted);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  details.params table { margin-top: 6px; }
+  table.kv {
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  table.kv td { padding: 2px 12px 2px 0; vertical-align: top; }
+  table.kv td:first-child { color: var(--muted); }
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 8px 0 18px;
+  }
+  .metric {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 14px;
+    min-width: 130px;
+  }
+  .metric .name {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .metric .value {
+    font-size: 18px;
+    color: #111;
+    font-weight: 600;
+    font-feature-settings: "tnum" 1;
+  }
+  .metric .unit { font-size: 11px; color: var(--muted); margin-left: 3px; }
+  .metric .description { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .figure-block {
+    margin: 18px 0 28px;
+    padding: 12px 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+  }
+  .figure-block .fig-title {
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+  }
+  .figure-block .fig-metric {
+    color: var(--accent);
+    font-size: 12px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    margin-bottom: 10px;
+  }
+  .figure-block .fig-caption {
+    color: #555;
+    font-size: 12.5px;
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .figure-block .fig-links {
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  .figure-block .fig-links a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-right: 12px;
+  }
+  .figure-block .fig-links a:hover { color: var(--accent); }
+  table.report-table {
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 12px;
+    background: #fff;
+  }
+  table.report-table th, table.report-table td {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  table.report-table th {
+    background: var(--bg-soft);
+    font-weight: 600;
+    color: #222;
+  }
+  .table-block {
+    margin: 18px 0 28px;
+    padding: 12px 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+  }
+  .table-block .tbl-title {
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 6px;
+  }
+  .table-block .tbl-caption {
+    color: #555;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 6px;
+  }
+  .table-block .truncation-note {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  footer.report-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    padding: 16px 40px;
+    color: var(--muted);
+    font-size: 11px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <h1>Multiverse biomarker discovery — overview</h1>
+  <div class="meta">
+    multiverse landing index · generated 2026-05-07T09:29:06 ·
+    8 sections · 4 figures
+  </div>
+  
+  <div class="path-chain">
+    <span style="color: var(--muted); margin-right: 6px;">axes varied:</span>
+    <span class="step">imputation∈{halfmin,missforest,ns_knn,qrilc}</span><span class="arrow">·</span><span class="step">drift∈{qc_rsc,serrf}</span><span class="arrow">·</span><span class="step">normalisation∈{median,mstus,pqn}</span><span class="arrow">·</span><span class="step">transformation∈{glog,log2}</span><span class="arrow">·</span><span class="step">scaling=pareto</span>
+  </div>
+  
+</header>
+
+<div class="layout">
+
+<nav class="sidebar">
+  <h3>Sections</h3>
+  <a href="#overview">Multiverse summary</a><a href="#paths">Paths in this multiverse</a><a href="#specification_curve">Specification curve</a><a href="#agreement">Cross-path agreement (Jaccard)</a><a href="#tiers">Consensus tier breakdown</a><a href="#top_features">Top 30 consensus features</a><a href="#method_drilldown">Method evidence drilldown — top 30 consensus features</a><a href="#methods">Methods + reproducibility</a>
+</nav>
+
+<main class="content">
+
+<section class="report-section" id="overview">
+  <h2>Multiverse summary</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Each path through the multiverse runs the full discovery pipeline with one method choice swapped relative to the baseline. Consensus = features in ≥ threshold of paths&#39; shortlists (per-path shortlist gate stays at the path&#39;s own k-of-N rule).</div>
+  
+
+  
+
+  
+  <div class="metrics">
+    
+    <div class="metric">
+      <div class="name">n_paths_total</div>
+      <div class="value">4</div>
+      
+    </div>
+    
+    <div class="metric">
+      <div class="name">n_paths_succeeded</div>
+      <div class="value">4</div>
+      
+    </div>
+    
+    <div class="metric">
+      <div class="name">n_features</div>
+      <div class="value">4,644</div>
+      <div class="description">universe (union across paths)</div>
+    </div>
+    
+    <div class="metric">
+      <div class="name">n_consensus</div>
+      <div class="value">15</div>
+      <div class="description">≥ 50% of paths agree</div>
+    </div>
+    
+    <div class="metric">
+      <div class="name">tier_1</div>
+      <div class="value">3</div>
+      
+    </div>
+    
+    <div class="metric">
+      <div class="name">tier_2</div>
+      <div class="value">12</div>
+      
+    </div>
+    
+    <div class="metric">
+      <div class="name">tier_3</div>
+      <div class="value">10</div>
+      
+    </div>
+    
+  </div>
+  
+
+  
+
+  
+</section>
+
+<section class="report-section" id="paths">
+  <h2>Paths in this multiverse</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Each row is one full pipeline path. Click the link to open that path&#39;s full report (per-stage figures, multivariate panels, per-method shortlist parquet).</div>
+  
+
+  
+
+  
+
+  
+
+  
+  <div class="table-block">
+    <div class="tbl-title">Per-path summary</div>
+    <table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>path</th>
+      <th>imputation</th>
+      <th>drift</th>
+      <th>normalisation</th>
+      <th>transformation</th>
+      <th>scaling</th>
+      <th>runtime_min</th>
+      <th>n_shortlisted</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="path_a_classical/index.html">↗ path_a_classical</a></td>
+      <td>halfmin</td>
+      <td>qc_rsc</td>
+      <td>pqn</td>
+      <td>log2</td>
+      <td>pareto</td>
+      <td>0.0</td>
+      <td>14</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td><a href="path_b_robust_ml/index.html">↗ path_b_robust_ml</a></td>
+      <td>missforest</td>
+      <td>serrf</td>
+      <td>mstus</td>
+      <td>glog</td>
+      <td>pareto</td>
+      <td>0.0</td>
+      <td>6</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td><a href="path_c_mnar_aware/index.html">↗ path_c_mnar_aware</a></td>
+      <td>qrilc</td>
+      <td>qc_rsc</td>
+      <td>pqn</td>
+      <td>glog</td>
+      <td>pareto</td>
+      <td>0.0</td>
+      <td>20</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td><a href="path_d_middle/index.html">↗ path_d_middle</a></td>
+      <td>ns_knn</td>
+      <td>serrf</td>
+      <td>median</td>
+      <td>log2</td>
+      <td>pareto</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>✓</td>
+    </tr>
+  </tbody>
+</table>
+    
+    <div class="tbl-caption">Each path runs the same data through different method choices. The shortlist count varies because each method-axis swap perturbs the variance / correlation structure that the downstream selection sees.</div>
+  </div>
+  
+</section>
+
+<section class="report-section" id="specification_curve">
+  <h2>Specification curve</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">How many features each path called shortlisted, sorted ascending. Reading instability (Simonsohn et al. 2020): a wide spread = the answer is sensitive to method choice; a tight band = the methods agree on the size of the answer.</div>
+  
+
+  
+
+  
+
+  
+  <div class="figure-block" id="specification_curve_00_shortlist_size_per_path-block">
+    <div class="fig-title">Shortlist size per path</div>
+    <div class="fig-metric">specification curve (Simonsohn 2020)</div>
+    <div>                            <div id="specification_curve_00_shortlist_size_per_path" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("specification_curve_00_shortlist_size_per_path")) {                    Plotly.newPlot(                        "specification_curve_00_shortlist_size_per_path",                        [{"hovertemplate":"%{x}\u003cbr\u003en_shortlisted: %{y}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#0072B2","line":{"color":"#222","width":0.6}},"name":"shortlisted","text":["4","6","14","20"],"textposition":"outside","x":["path_d_middle","path_b_robust_ml","path_a_classical","path_c_mnar_aware"],"y":[4,6,14,20],"type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"rgb(36,36,36)"},"error_y":{"color":"rgb(36,36,36)"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"baxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2d"}],"histogram":[{"marker":{"line":{"color":"white","width":0.6}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"rgb(237,237,237)"},"line":{"color":"white"}},"header":{"fill":{"color":"rgb(217,217,217)"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"colorscale":{"diverging":[[0.0,"rgb(103,0,31)"],[0.1,"rgb(178,24,43)"],[0.2,"rgb(214,96,77)"],[0.3,"rgb(244,165,130)"],[0.4,"rgb(253,219,199)"],[0.5,"rgb(247,247,247)"],[0.6,"rgb(209,229,240)"],[0.7,"rgb(146,197,222)"],[0.8,"rgb(67,147,195)"],[0.9,"rgb(33,102,172)"],[1.0,"rgb(5,48,97)"]],"sequential":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"sequentialminus":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]]},"colorway":["#1F77B4","#FF7F0E","#2CA02C","#D62728","#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF"],"font":{"color":"rgb(36,36,36)"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","radialaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"zaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"}},"shapedefaults":{"fillcolor":"black","line":{"width":0},"opacity":0.3},"ternary":{"aaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"baxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","caxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"}}},"font":{"family":"serif","size":12,"color":"#222222"},"title":{"text":"Specification curve \u2014 shortlist size per path"},"margin":{"l":60,"r":20,"t":50,"b":60},"xaxis":{"title":{"text":"path","font":{"family":"serif","size":11,"color":"#333333"}},"tickfont":{"size":11},"tickangle":-25},"yaxis":{"title":{"text":"n features in path's shortlist","font":{"family":"serif","size":11,"color":"#333333"}}}},                        {"responsive": true}                    )                };            </script>        </div>
+    <div class="fig-caption">Each bar = one path&#39;s per-path shortlist count (under the path&#39;s own k-of-N rule). Annotated count on top of each bar.</div>
+    <div class="fig-links">
+      <a href="figures/specification_curve_00_shortlist_size_per_path.html" target="_blank">↗ open interactive</a>
+      <a href="figures/specification_curve_00_shortlist_size_per_path.png" target="_blank">⬇ PNG</a>
+    </div>
+  </div>
+  
+
+  
+</section>
+
+<section class="report-section" id="agreement">
+  <h2>Cross-path agreement (Jaccard)</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Pairwise overlap of per-path shortlists. J = |∩| / |∪|. Diagonal is always 1.0; off-diagonal close to 1.0 = paths agree on which features are biomarkers; close to 0 = each path is calling a different set.</div>
+  
+
+  
+
+  
+
+  
+  <div class="figure-block" id="agreement_00_pairwise_jaccard_heatmap-block">
+    <div class="fig-title">Pairwise Jaccard heatmap</div>
+    <div class="fig-metric">Jaccard similarity (per-path shortlists)</div>
+    <div>                            <div id="agreement_00_pairwise_jaccard_heatmap" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("agreement_00_pairwise_jaccard_heatmap")) {                    Plotly.newPlot(                        "agreement_00_pairwise_jaccard_heatmap",                        [{"colorbar":{"len":0.6,"title":{"text":"Jaccard"}},"colorscale":[[0.0,"rgb(247,251,255)"],[0.125,"rgb(222,235,247)"],[0.25,"rgb(198,219,239)"],[0.375,"rgb(158,202,225)"],[0.5,"rgb(107,174,214)"],[0.625,"rgb(66,146,198)"],[0.75,"rgb(33,113,181)"],[0.875,"rgb(8,81,156)"],[1.0,"rgb(8,48,107)"]],"hovertemplate":"%{y} \u2229 %{x}: J = %{z:.3f}\u003cextra\u003e\u003c\u002fextra\u003e","text":[["1.00","0.05","0.42","0.06"],["0.05","1.00","0.30","0.43"],["0.42","0.30","1.00","0.14"],["0.06","0.43","0.14","1.00"]],"textfont":{"color":"#111","size":12},"texttemplate":"%{text}","x":["path_a_classical","path_b_robust_ml","path_c_mnar_aware","path_d_middle"],"y":["path_a_classical","path_b_robust_ml","path_c_mnar_aware","path_d_middle"],"z":{"dtype":"f8","bdata":"AAAAAAAA8D8or6G8hvKqP6uqqqqqqto\u002fHh4eHh4erj8or6G8hvKqPwAAAAAAAPA\u002fMzMzMzMz0z\u002fbtm3btm3bP6uqqqqqqto\u002fMzMzMzMz0z8AAAAAAADwP5IkSZIkScI\u002fHh4eHh4erj\u002fbtm3btm3bP5IkSZIkScI\u002fAAAAAAAA8D8=","shape":"4, 4"},"zmax":1.0,"zmin":0.0,"type":"heatmap"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"rgb(36,36,36)"},"error_y":{"color":"rgb(36,36,36)"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"baxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2d"}],"histogram":[{"marker":{"line":{"color":"white","width":0.6}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"rgb(237,237,237)"},"line":{"color":"white"}},"header":{"fill":{"color":"rgb(217,217,217)"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"colorscale":{"diverging":[[0.0,"rgb(103,0,31)"],[0.1,"rgb(178,24,43)"],[0.2,"rgb(214,96,77)"],[0.3,"rgb(244,165,130)"],[0.4,"rgb(253,219,199)"],[0.5,"rgb(247,247,247)"],[0.6,"rgb(209,229,240)"],[0.7,"rgb(146,197,222)"],[0.8,"rgb(67,147,195)"],[0.9,"rgb(33,102,172)"],[1.0,"rgb(5,48,97)"]],"sequential":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"sequentialminus":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]]},"colorway":["#1F77B4","#FF7F0E","#2CA02C","#D62728","#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF"],"font":{"color":"rgb(36,36,36)"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","radialaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"zaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"}},"shapedefaults":{"fillcolor":"black","line":{"width":0},"opacity":0.3},"ternary":{"aaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"baxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","caxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"}}},"font":{"family":"serif","size":12,"color":"#222222"},"title":{"text":"Cross-path Jaccard similarity of shortlists"},"margin":{"l":60,"r":20,"t":50,"b":60},"xaxis":{"title":{"text":"path","font":{"family":"serif","size":11,"color":"#333333"}},"tickfont":{"size":10},"tickangle":-25},"yaxis":{"title":{"text":"path","font":{"family":"serif","size":11,"color":"#333333"}},"tickfont":{"size":10}}},                        {"responsive": true}                    )                };            </script>        </div>
+    <div class="fig-caption">Heatmap of pairwise Jaccard similarity between path shortlists. Annotated values are J, range [0, 1].</div>
+    <div class="fig-links">
+      <a href="figures/agreement_00_pairwise_jaccard_heatmap.html" target="_blank">↗ open interactive</a>
+      <a href="figures/agreement_00_pairwise_jaccard_heatmap.png" target="_blank">⬇ PNG</a>
+    </div>
+  </div>
+  
+
+  
+</section>
+
+<section class="report-section" id="tiers">
+  <h2>Consensus tier breakdown</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Tier_1: feature in ≥ 75 % of paths. Tier_2: 50–75 %. Tier_3: 1–50 %. Tier_1 + Tier_2 = passed multiverse consensus at threshold ≥ 50 %.</div>
+  
+
+  
+
+  
+
+  
+  <div class="figure-block" id="tiers_00_features_per_tier-block">
+    <div class="fig-title">Features per tier</div>
+    <div class="fig-metric">multiverse consensus (Steegen 2016)</div>
+    <div>                            <div id="tiers_00_features_per_tier" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("tiers_00_features_per_tier")) {                    Plotly.newPlot(                        "tiers_00_features_per_tier",                        [{"hovertemplate":"%{y}: %{x}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":["#0072B2","#56B4E9","#CCCCCC","#F0F0F0"],"line":{"color":"#222","width":0.6}},"orientation":"h","text":["3","12","10","4619"],"textposition":"outside","x":[3,12,10,4619],"y":["tier_1 (\u226575 % paths)","tier_2 (50\u201375 %)","tier_3 (1\u201350 %)","none (0 %)"],"type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"rgb(36,36,36)"},"error_y":{"color":"rgb(36,36,36)"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"baxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2d"}],"histogram":[{"marker":{"line":{"color":"white","width":0.6}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"rgb(237,237,237)"},"line":{"color":"white"}},"header":{"fill":{"color":"rgb(217,217,217)"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"colorscale":{"diverging":[[0.0,"rgb(103,0,31)"],[0.1,"rgb(178,24,43)"],[0.2,"rgb(214,96,77)"],[0.3,"rgb(244,165,130)"],[0.4,"rgb(253,219,199)"],[0.5,"rgb(247,247,247)"],[0.6,"rgb(209,229,240)"],[0.7,"rgb(146,197,222)"],[0.8,"rgb(67,147,195)"],[0.9,"rgb(33,102,172)"],[1.0,"rgb(5,48,97)"]],"sequential":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"sequentialminus":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]]},"colorway":["#1F77B4","#FF7F0E","#2CA02C","#D62728","#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF"],"font":{"color":"rgb(36,36,36)"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","radialaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"zaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"}},"shapedefaults":{"fillcolor":"black","line":{"width":0},"opacity":0.3},"ternary":{"aaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"baxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","caxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"}}},"yaxis":{"autorange":"reversed","title":{"text":"tier","font":{"family":"serif","size":11,"color":"#333333"}}},"font":{"family":"serif","size":12,"color":"#222222"},"title":{"text":"Consensus tier breakdown"},"margin":{"l":60,"r":20,"t":50,"b":60},"xaxis":{"title":{"text":"n features","font":{"family":"serif","size":11,"color":"#333333"}}},"showlegend":false},                        {"responsive": true}                    )                };            </script>        </div>
+    <div class="fig-caption">Bar lengths are absolute feature counts. Total = universe.</div>
+    <div class="fig-links">
+      <a href="figures/tiers_00_features_per_tier.html" target="_blank">↗ open interactive</a>
+      <a href="figures/tiers_00_features_per_tier.png" target="_blank">⬇ PNG</a>
+    </div>
+  </div>
+  
+
+  
+</section>
+
+<section class="report-section" id="top_features">
+  <h2>Top 30 consensus features</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Sorted by paths-flagging fraction. n_paths_&lt;axis&gt; columns show how many paths flagged the feature via each method axis — useful to see whether the consensus is multi-method or driven by a single method.</div>
+  
+
+  
+
+  
+
+  
+
+  
+  <div class="table-block">
+    <div class="tbl-title">Top 30 by consensus fraction</div>
+    <table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>feature_id</th>
+      <th>n_paths_flagging</th>
+      <th>frac_paths_flagging</th>
+      <th>consensus_tier</th>
+      <th>passed_consensus</th>
+      <th>n_paths_univariate</th>
+      <th>n_paths_plsda</th>
+      <th>n_paths_splsda</th>
+      <th>n_paths_rf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10.76_1918.0639n</td>
+      <td>4</td>
+      <td>1</td>
+      <td>tier_1</td>
+      <td>True</td>
+      <td>4</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>10.55_1761.0087n</td>
+      <td>3</td>
+      <td>0.75</td>
+      <td>tier_1</td>
+      <td>True</td>
+      <td>4</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>2.37_343.0578n</td>
+      <td>3</td>
+      <td>0.75</td>
+      <td>tier_1</td>
+      <td>True</td>
+      <td>4</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>10.78_1702.0105n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>10.81_1498.8843n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>2.37_703.0737m/z</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>4.03_659.2403n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>4.03_675.2058n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>4.03_691.1686n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>4.49_583.1440n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>3</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>4.49_599.1149n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>8.12_938.3263n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>8.13_900.3844n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>8.24_1273.7281n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>8.96_1386.8145n</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>tier_2</td>
+      <td>True</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1.60_446.1642n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>10.11_526.9552m/z</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>10.65_1777.9366n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>11.33_3065.5071n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>11.44_2759.2766n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>2.38_674.0754n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>4.81_512.0838n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>5.57_577.2455m/z</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>7.30_303.1788n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>8.87_660.2612n</td>
+      <td>1</td>
+      <td>0.25</td>
+      <td>tier_3</td>
+      <td>False</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0.50_258.1333n</td>
+      <td>0</td>
+      <td>0</td>
+      <td>none</td>
+      <td>False</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0.50_265.1432m/z</td>
+      <td>0</td>
+      <td>0</td>
+      <td>none</td>
+      <td>False</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0.51_365.2751m/z</td>
+      <td>0</td>
+      <td>0</td>
+      <td>none</td>
+      <td>False</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0.53_242.2079n</td>
+      <td>0</td>
+      <td>0</td>
+      <td>none</td>
+      <td>False</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0.54_130.1415m/z</td>
+      <td>0</td>
+      <td>0</td>
+      <td>none</td>
+      <td>False</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+    
+    <div class="tbl-caption">Top features ranked by cross-path agreement. frac_paths_flagging ∈ [0, 1]; passed_consensus = frac ≥ threshold.</div>
+  </div>
+  
+</section>
+
+<section class="report-section" id="method_drilldown">
+  <h2>Method evidence drilldown — top 30 consensus features</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Cell = 1 (coloured) when that method&#39;s gate passed for that feature in that path. Vertical lines separate paths. Whole horizontal bands of one method = the consensus is dominated by that method; mixed = multi-method agreement (the strong case).</div>
+  
+
+  
+
+  
+
+  
+  <div class="figure-block" id="method_drilldown_00_per_feature_method_evidence_per_path-block">
+    <div class="fig-title">Per-feature method evidence per path</div>
+    <div class="fig-metric">per-feature × path × method-axis evidence</div>
+    <div>                            <div id="method_drilldown_00_per_feature_method_evidence_per_path" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("method_drilldown_00_per_feature_method_evidence_per_path")) {                    Plotly.newPlot(                        "method_drilldown_00_per_feature_method_evidence_per_path",                        [{"colorscale":[[0,"#fafafa"],[1,"#0072B2"]],"hovertemplate":"feature %{y}\u003cbr\u003e%{x}: %{z:.0f}\u003cextra\u003e\u003c\u002fextra\u003e","showscale":false,"x":["p_a_classical:univ","p_a_classical:plsd","p_a_classical:spls","p_a_classical:rf","p_b_robust_ml:univ","p_b_robust_ml:plsd","p_b_robust_ml:spls","p_b_robust_ml:rf","p_c_mnar_aware:univ","p_c_mnar_aware:plsd","p_c_mnar_aware:spls","p_c_mnar_aware:rf","p_d_middle:univ","p_d_middle:plsd","p_d_middle:spls","p_d_middle:rf"],"xgap":1,"y":["10.76_1918.0639n","10.55_1761.0087n","2.37_343.0578n","10.78_1702.0105n","10.81_1498.8843n","2.37_703.0737m\u002fz","4.03_659.2403n","4.03_675.2058n","4.03_691.1686n","4.49_583.1440n","4.49_599.1149n","8.12_938.3263n","8.13_900.3844n","8.24_1273.7281n","8.96_1386.8145n","1.60_446.1642n","10.11_526.9552m\u002fz","10.65_1777.9366n","11.33_3065.5071n","11.44_2759.2766n","2.38_674.0754n","4.81_512.0838n","5.57_577.2455m\u002fz","7.30_303.1788n","8.87_660.2612n","0.50_258.1333n","0.50_265.1432m\u002fz","0.51_365.2751m\u002fz","0.53_242.2079n","0.54_130.1415m\u002fz"],"ygap":1,"z":{"dtype":"f8","bdata":"AAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","shape":"30, 16"},"type":"heatmap"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"rgb(36,36,36)"},"error_y":{"color":"rgb(36,36,36)"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"baxis":{"endlinecolor":"rgb(36,36,36)","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"rgb(36,36,36)"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"histogram2d"}],"histogram":[{"marker":{"line":{"color":"white","width":0.6}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"rgb(237,237,237)"},"line":{"color":"white"}},"header":{"fill":{"color":"rgb(217,217,217)"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":1,"tickcolor":"rgb(36,36,36)","ticks":"outside"}},"colorscale":{"diverging":[[0.0,"rgb(103,0,31)"],[0.1,"rgb(178,24,43)"],[0.2,"rgb(214,96,77)"],[0.3,"rgb(244,165,130)"],[0.4,"rgb(253,219,199)"],[0.5,"rgb(247,247,247)"],[0.6,"rgb(209,229,240)"],[0.7,"rgb(146,197,222)"],[0.8,"rgb(67,147,195)"],[0.9,"rgb(33,102,172)"],[1.0,"rgb(5,48,97)"]],"sequential":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"sequentialminus":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]]},"colorway":["#1F77B4","#FF7F0E","#2CA02C","#D62728","#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF"],"font":{"color":"rgb(36,36,36)"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","radialaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"zaxis":{"backgroundcolor":"white","gridcolor":"rgb(232,232,232)","gridwidth":2,"linecolor":"rgb(36,36,36)","showbackground":true,"showgrid":false,"showline":true,"ticks":"outside","zeroline":false,"zerolinecolor":"rgb(36,36,36)"}},"shapedefaults":{"fillcolor":"black","line":{"width":0},"opacity":0.3},"ternary":{"aaxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"baxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"},"bgcolor":"white","caxis":{"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside"}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"},"yaxis":{"automargin":true,"gridcolor":"rgb(232,232,232)","linecolor":"rgb(36,36,36)","showgrid":false,"showline":true,"ticks":"outside","title":{"standoff":15},"zeroline":false,"zerolinecolor":"rgb(36,36,36)"}}},"shapes":[{"line":{"color":"#222","width":1.0},"type":"line","x0":3.5,"x1":3.5,"xref":"x","y0":0,"y1":1,"yref":"y domain"},{"line":{"color":"#222","width":1.0},"type":"line","x0":7.5,"x1":7.5,"xref":"x","y0":0,"y1":1,"yref":"y domain"},{"line":{"color":"#222","width":1.0},"type":"line","x0":11.5,"x1":11.5,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"font":{"family":"serif","size":12,"color":"#222222"},"title":{"text":"Method evidence per path \u00d7 method"},"margin":{"l":60,"r":20,"t":50,"b":60},"xaxis":{"title":{"text":"path \u00d7 method","font":{"family":"serif","size":11,"color":"#333333"}},"tickfont":{"size":9},"tickangle":-55},"yaxis":{"title":{"text":"feature","font":{"family":"serif","size":11,"color":"#333333"}},"tickfont":{"size":9},"autorange":"reversed"},"height":600},                        {"responsive": true}                    )                };            </script>        </div>
+    <div class="fig-caption">If you see horizontal stripes only on a few methods (e.g. univariate + plsda) and never on others (splsda, rf), the shortlist gate&#39;s k-of-N rule is in practice an AND of those two methods — re-document accordingly.</div>
+    <div class="fig-links">
+      <a href="figures/method_drilldown_00_per_feature_method_evidence_per_path.html" target="_blank">↗ open interactive</a>
+      <a href="figures/method_drilldown_00_per_feature_method_evidence_per_path.png" target="_blank">⬇ PNG</a>
+    </div>
+  </div>
+  
+
+  
+</section>
+
+<section class="report-section" id="methods">
+  <h2>Methods + reproducibility</h2>
+
+  <div class="method-line"></div>
+
+  
+  <div class="description">Multiverse design: Steegen et al. 2016 (Perspect Psychol Sci 11:702). Specification curve: Simonsohn et al. 2020 (Nat Hum Behav 4:1208). Per-path shortlist (mQACC k-of-N): Westerhuis 2008, Saccenti 2014. All numbers on this page are reproducible from the per-path shortlist parquets and the consensus parquet (paths listed below).</div>
+  
+
+  
+
+  
+  <div class="metrics">
+    
+    <div class="metric">
+      <div class="name">consensus_threshold</div>
+      <div class="value">0.5</div>
+      
+    </div>
+    
+    <div class="metric">
+      <div class="name">n_bootstrap</div>
+      <div class="value">?</div>
+      <div class="description">per-path stability resamples</div>
+    </div>
+    
+    <div class="metric">
+      <div class="name">n_permutation</div>
+      <div class="value">?</div>
+      <div class="description">per-path label-shuffle null</div>
+    </div>
+    
+  </div>
+  
+
+  
+
+  
+  <div class="table-block">
+    <div class="tbl-title">Output files (under data/reports/multiverse)</div>
+    <table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>file</th>
+      <th>purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>consensus.parquet</td>
+      <td>full per-feature consensus table (all 4644 features)</td>
+    </tr>
+    <tr>
+      <td>consensus.csv</td>
+      <td>same, human-readable</td>
+    </tr>
+    <tr>
+      <td>consensus_passed.parquet</td>
+      <td>passed_consensus=True subset only</td>
+    </tr>
+    <tr>
+      <td>consensus_config.json</td>
+      <td>threshold, n_paths, path_names, n_per_tier, runtime</td>
+    </tr>
+    <tr>
+      <td>&lt;path_name&gt;/shortlist.parquet</td>
+      <td>Phase 9 per-path shortlist (per path subdir)</td>
+    </tr>
+    <tr>
+      <td>&lt;path_name&gt;/index.html</td>
+      <td>full per-path HTML report</td>
+    </tr>
+  </tbody>
+</table>
+    
+    
+  </div>
+  
+</section>
+
+</main>
+
+</div>
+
+<footer class="report-footer">
+  Biomarker-Discovery-Only MLOps · multiverse landing index · Steegen 2016 / Simonsohn 2020
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "threshold": 0.5,
+  "n_paths_total": 4,
+  "n_consensus": 15,
+  "n_per_tier": {
+    "tier_1": 3,
+    "tier_2": 12,
+    "tier_3": 10,
+    "none": 4619
+  },
+  "path_names": [
+    "path_a_classical",
+    "path_b_robust_ml",
+    "path_c_mnar_aware",
+    "path_d_middle"
+  ],
+  "runtime_seconds": 0.024814844131469727
+}

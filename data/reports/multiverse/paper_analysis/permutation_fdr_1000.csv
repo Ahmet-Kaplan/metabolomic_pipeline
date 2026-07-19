@@ -1,0 +1,2 @@
+n_permutations,mean_null,sd_null,p95_null,p99_null,max_null,observed_path_a,observed_consensus
+200,46.68,315.88,0,1668,2890,14,15

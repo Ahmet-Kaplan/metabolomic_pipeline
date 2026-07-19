@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stage 3 — Modified 80 % Rule — Biomarker Discovery MLOps</title>
+<style>
+  :root {
+    --navy: #0b2545;
+    --navy-2: #13315c;
+    --blue: #1e4377;
+    --accent: #c9a94e;
+    --paper: #f6f8fb;
+    --border: #d6dde6;
+    --text: #1a1a1a;
+    --muted: #555;
+  }
+  body {
+    font-family: "Source Sans Pro", "Helvetica Neue", sans-serif;
+    background: var(--paper); color: var(--text);
+    margin: 0; padding: 0; line-height: 1.55;
+  }
+  header.top {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; padding: 3rem 2rem;
+  }
+  header.top h1 { margin: 0 0 .3em 0; font-weight: 700; font-size: 2.1rem; }
+  header.top p  { margin: 0; color: #a8c4e6; font-size: 1.05rem; }
+  main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+  table.info {
+    border-collapse: collapse; margin: 1.5em 0; font-size: .95rem;
+  }
+  table.info th { background: var(--navy); color: #fff; padding: .4em .8em; text-align: left; }
+  table.info td { padding: .4em .8em; border-bottom: 1px solid var(--border); }
+  .cards {
+    display: grid; gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    margin-top: 2rem;
+  }
+  .card {
+    background: #fff; border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.3rem; box-shadow: 0 1px 3px rgba(11, 37, 69, .06);
+  }
+  .card header { display:flex; justify-content:space-between; align-items:baseline; }
+  .card h2 { margin: 0; font-size: 1.08rem; color: var(--navy); }
+  .card .tag { font-size: .78rem; color: var(--muted); font-family: ui-monospace, monospace; }
+  .card p  { color: var(--muted); font-size: .92rem; margin: .7em 0 1em; }
+  .card footer { display: flex; gap: .8em; }
+  .card a {
+    padding: .35em .8em; border-radius: 3px; text-decoration: none; font-size: .88rem;
+  }
+  .card a.primary { background: var(--navy); color: #fff; }
+  .card a.primary:hover { background: var(--blue); }
+  .card a.png { background: #eee; color: var(--text); }
+  footer.foot {
+    padding: 2rem; text-align: center; color: var(--muted); font-size: .85rem;
+    border-top: 1px solid var(--border); margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Biomarker Discovery MLOps</h1>
+  <p>Stage 3 — Modified 80 % Rule</p>
+</header>
+<main>
+  <table class='info'><tr><th>Input features</th><td>30,370</td></tr><tr><th>Kept</th><td>28,529 (93.94 %)</td></tr><tr><th>Dropped</th><td>1,841 (6.06 %)</td></tr><tr><th>Threshold</th><td>0.8</td></tr></table>
+  <div class="cards">
+    <article class="card">
+  <header>
+    <h2>1. Max-presence distribution (before/after)</h2>
+    <span class="tag">01_presence_histogram</span>
+  </header>
+  <p>Every feature placed at its max-across-groups presence %, coloured by kept vs dropped. The threshold line at 0.80 is the boundary.</p>
+  <footer>
+    <a class="primary" href="plots/01_presence_histogram.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/01_presence_histogram.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>2. Per-group presence breakdown</h2>
+    <span class="tag">02_per_group_breakdown</span>
+  </header>
+  <p>Stacked bar per cell line: features that would pass the rule IF only this group defined it. The modified rule takes the max across groups.</p>
+  <footer>
+    <a class="primary" href="plots/02_per_group_breakdown.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/02_per_group_breakdown.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>3. Kept vs dropped in m/z × RT space</h2>
+    <span class="tag">03_mz_rt_drops</span>
+  </header>
+  <p>Spatial map of the drop decisions. Clustering in void volume (RT < 0.5 min) is a classic sign of injection-artefact features being correctly removed.</p>
+  <footer>
+    <a class="primary" href="plots/03_mz_rt_drops.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/03_mz_rt_drops.png" target="_blank">PNG</a>
+  </footer>
+</article>
+  </div>
+</main>
+<footer class="foot">
+  Generated 2026-04-24 13:42 UTC · Stage 2 is strictly diagnostic — no features or samples are dropped.
+</footer>
+</body>
+</html>

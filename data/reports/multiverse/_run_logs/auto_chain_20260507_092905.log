@@ -1,0 +1,11 @@
+[09:29:05] === SERVER AUTO-CHAIN STARTED (loky run) ===
+[09:29:05] tracking PID 1670231...
+[09:30:05] resume process exited
+    path_a_classical: shortlist=OK  index=OK
+    path_b_robust_ml: shortlist=OK  index=OK
+    path_c_mnar_aware: shortlist=OK  index=OK
+    path_d_middle: shortlist=OK  index=OK
+[09:30:05] running audit...
+[09:30:06] audit: 46 pass / 0
+0 fail
+[09:30:06] === DONE ===

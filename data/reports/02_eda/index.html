@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stage 2 — Exploratory Data Analysis — Biomarker Discovery MLOps</title>
+<style>
+  :root {
+    --navy: #0b2545;
+    --navy-2: #13315c;
+    --blue: #1e4377;
+    --accent: #c9a94e;
+    --paper: #f6f8fb;
+    --border: #d6dde6;
+    --text: #1a1a1a;
+    --muted: #555;
+  }
+  body {
+    font-family: "Source Sans Pro", "Helvetica Neue", sans-serif;
+    background: var(--paper); color: var(--text);
+    margin: 0; padding: 0; line-height: 1.55;
+  }
+  header.top {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; padding: 3rem 2rem;
+  }
+  header.top h1 { margin: 0 0 .3em 0; font-weight: 700; font-size: 2.1rem; }
+  header.top p  { margin: 0; color: #a8c4e6; font-size: 1.05rem; }
+  main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+  table.info {
+    border-collapse: collapse; margin: 1.5em 0; font-size: .95rem;
+  }
+  table.info th { background: var(--navy); color: #fff; padding: .4em .8em; text-align: left; }
+  table.info td { padding: .4em .8em; border-bottom: 1px solid var(--border); }
+  .cards {
+    display: grid; gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    margin-top: 2rem;
+  }
+  .card {
+    background: #fff; border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.3rem; box-shadow: 0 1px 3px rgba(11, 37, 69, .06);
+  }
+  .card header { display:flex; justify-content:space-between; align-items:baseline; }
+  .card h2 { margin: 0; font-size: 1.08rem; color: var(--navy); }
+  .card .tag { font-size: .78rem; color: var(--muted); font-family: ui-monospace, monospace; }
+  .card p  { color: var(--muted); font-size: .92rem; margin: .7em 0 1em; }
+  .card footer { display: flex; gap: .8em; }
+  .card a {
+    padding: .35em .8em; border-radius: 3px; text-decoration: none; font-size: .88rem;
+  }
+  .card a.primary { background: var(--navy); color: #fff; }
+  .card a.primary:hover { background: var(--blue); }
+  .card a.png { background: #eee; color: var(--text); }
+  footer.foot {
+    padding: 2rem; text-align: center; color: var(--muted); font-size: .85rem;
+    border-top: 1px solid var(--border); margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Biomarker Discovery MLOps</h1>
+  <p>Stage 2 — Exploratory Data Analysis</p>
+</header>
+<main>
+  <table class='info'><tr><th>Features</th><td>30,370</td></tr><tr><th>Samples</th><td>53</td></tr><tr><th>Abundance rows (long)</th><td>1,427,390</td></tr><tr><th>Identification candidates</th><td>1,004,678</td></tr></table>
+  <div class="cards">
+    <article class="card">
+  <header>
+    <h2>Auto-profile — features</h2>
+    <span class="tag">profile-A</span>
+  </header>
+  <p>ydata-profiling auto-report on per-feature metadata (RT, m/z, CCS, charge, peak width, etc.). Fast sanity-check for dtype / range regressions.</p>
+  <footer>
+    <a class="primary" href="profiles/features.html" target="_blank">Open interactive HTML ↗</a>
+
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>Auto-profile — samples</h2>
+    <span class="tag">profile-B</span>
+  </header>
+  <p>ydata-profiling auto-report on the 53-injection metadata table (cell_line, injection_type, replicate, acq_date).</p>
+  <footer>
+    <a class="primary" href="profiles/samples.html" target="_blank">Open interactive HTML ↗</a>
+
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>Auto-profile — identification (minimal)</h2>
+    <span class="tag">profile-C</span>
+  </header>
+  <p>1 M-row table of candidate IDs. Minimal mode (no correlations or interactions — otherwise slow). Good for per-column stats.</p>
+  <footer>
+    <a class="primary" href="profiles/identification.html" target="_blank">Open interactive HTML ↗</a>
+
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>1. Missingness heatmap</h2>
+    <span class="tag">01_missingness</span>
+  </header>
+  <p>Where are the NaN values? Rows = features sorted by missingness %, columns = injections ordered by type. Dark = present, white = missing.</p>
+  <footer>
+    <a class="primary" href="plots/01_missingness.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/01_missingness.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>2. PCA by group</h2>
+    <span class="tag">02_pca</span>
+  </header>
+  <p>2-component PCA on log-transformed abundances. Expected: tight QC cluster, five cell-line clusters, blanks far from biology, dilutions trailing from QC.</p>
+  <footer>
+    <a class="primary" href="plots/02_pca.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/02_pca.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>3. QC vs sample intensity</h2>
+    <span class="tag">03_qc_vs_sample_box</span>
+  </header>
+  <p>Box per injection, log₁₀(intensity). Healthy: QC boxes identical, biological boxes similar, blanks much lower, dilutions descending.</p>
+  <footer>
+    <a class="primary" href="plots/03_qc_vs_sample_box.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/03_qc_vs_sample_box.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>4. m/z × RT feature map</h2>
+    <span class="tag">04_mz_rt_density</span>
+  </header>
+  <p>Every feature plotted at its (RT, m/z) coordinate, coloured by log mean intensity across biology. The chemical-space star map.</p>
+  <footer>
+    <a class="primary" href="plots/04_mz_rt_density.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/04_mz_rt_density.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>5. QC run-order drift</h2>
+    <span class="tag">05_qc_drift</span>
+  </header>
+  <p>Median log₁₀(intensity) across QC injections vs QC sequence number. Flat = stable; trend = detector/column drift. Caveat: assumes QC numbering = chronological injection order (to confirm with MS operator).</p>
+  <footer>
+    <a class="primary" href="plots/05_qc_drift.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/05_qc_drift.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>6. Blank vs sample ratio (Stage 6 preview)</h2>
+    <span class="tag">06_blank_sample_ratio</span>
+  </header>
+  <p>log₁₀(mean_sample / mean_blank) per feature. Overlay marks the Stage 6 drop threshold equivalent to Saeed's blank-pct formula. Preview of how many features will survive the blank filter.</p>
+  <footer>
+    <a class="primary" href="plots/06_blank_sample_ratio.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/06_blank_sample_ratio.png" target="_blank">PNG</a>
+  </footer>
+</article><article class="card">
+  <header>
+    <h2>7. Dilution response + R² distribution (Stage 7 preview)</h2>
+    <span class="tag">07_dilution_response</span>
+  </header>
+  <p>Stratified sample of per-feature dilution curves plus R²_linear and R²_quadratic histograms across all features. Previews how many features will survive the teacher's R² ≥ 0.7 rule.</p>
+  <footer>
+    <a class="primary" href="plots/07_dilution_response.html" target="_blank">Open interactive HTML ↗</a>
+    <a class="png" href="plots/07_dilution_response.png" target="_blank">PNG</a>
+  </footer>
+</article>
+  </div>
+</main>
+<footer class="foot">
+  Generated 2026-04-24 13:15 UTC · Stage 2 is strictly diagnostic — no features or samples are dropped.
+</footer>
+</body>
+</html>

@@ -33,4 +33,4 @@ logs, available from the corresponding author on reasonable request.
 
 ## License
 
-MIT — see the main repository for details.
+MIT — see [LICENSE](LICENSE) for details.

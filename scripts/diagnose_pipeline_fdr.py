@@ -86,21 +86,12 @@ def _load_or_preprocess(paths: list[PathSpec]) -> dict[str, dict[str, pd.DataFra
     print("Loading raw data...")
     from biodisc.multiverse.production import load_multiverse_data
 
-    # Generate synthetic run_order if the real one doesn't exist
-    # (needed for drift correction pre-processing).
     run_order_path = Path("data/external/run_order.parquet")
-    run_order_path.parent.mkdir(parents=True, exist_ok=True)
     if not run_order_path.exists():
-        print("    [warning] run_order.parquet not found — creating synthetic version from samples")
-        samples_dummy = pd.read_parquet(Path("data/interim/01_parsed/samples.parquet"))
-        dummy_ro = pd.DataFrame({
-            "position": range(len(samples_dummy)),
-            "raw_sample_id": samples_dummy["raw_sample_id"].values,
-            "acq_datetime": pd.Timestamp("2026-01-09 09:00:00")
-            + pd.to_timedelta(samples_dummy.index * 10, unit="min"),
-        })
-        dummy_ro.to_parquet(run_order_path, compression="zstd")
-        print(f"    [created] {run_order_path} ({len(dummy_ro)} rows)")
+        # Never synthesise a run order: drift correction depends on it.
+        raise FileNotFoundError(
+            f"{run_order_path} missing; build it with `biodisc external build-run-order`"
+        )
 
     matrix, samples, features, run_order = load_multiverse_data()
 

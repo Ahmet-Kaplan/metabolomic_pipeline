@@ -1,0 +1,73 @@
+# ============================================================
+# Biomarker Discovery MLOps — Hydra base config
+# ============================================================
+# Override any key at CLI:
+#   biodisc parse paths.raw_dir=/custom/path
+#   biodisc parse +paths.extra_file=/tmp/foo.csv
+# Compose alternatives via group:
+#   biodisc parse paths=strict
+# ============================================================
+
+defaults:
+  - paths: default
+  - logging: default
+  - eda: default
+  - filter: default
+  - multiverse: default
+  - _self_
+
+# Project metadata (can be overridden)
+project:
+  name: biomarker-discovery-mlops
+  version: 0.1.0
+
+# Global deterministic seed — every stochastic stage must call
+# biodisc.seeds.set_seed(cfg.seed). Override at CLI for sensitivity checks:
+#   biodisc parse seed=1337
+seed: 42
+
+# Stage 1 — parse / reformat
+parse:
+  # Raw file filenames (relative to paths.raw_dir) — configurable so the pipeline
+  # works with any Progenesis-format export, not just I_66.
+  measurement_file: "I_66_CELL_METABOLOMICS_COMPOUND_MEASUREMENT(in).csv"
+  blank_file: "Blank(in).csv"
+  dilution_file: "dİLUTION(in).csv"
+  identification_file: "I_66_CELL_METABOLOMICS_COMPOUND_IDENTIFICATION.csv"
+
+  # Sample-id decoding regex. Default expects Progenesis layout:
+  #   09012026_MCF7_1       → biological
+  #   09012026_QC_3         → qc
+  #   09012026_Blank_1      → blank
+  #   09012026_QC_1_2       → dilution (level = 2, i.e. 1:2)
+  sample_id_pattern: '^(?P<acq>\d{8})_(?P<group>[A-Za-z0-9]+)(?:_(?P<dilution>\d+))?_(?P<rep>\d+)$'
+
+  # Output formats
+  emit_parquet: true
+  emit_csv_mirror: true
+  emit_wide: true  # also emit a wide feature×sample abundance matrix alongside long
+  emit_long: true
+
+  # Which abundance block to treat as canonical downstream (raw or normalised).
+  # Progenesis' internal normalisation is coarse; the multiverse pipeline
+  # (Stages 11-17) applies its own normalisation (PQN / MSTUS / median).
+  canonical_abundance: "raw"
+
+  # ----------------------------------------------------------
+  # Sample exclusions — applied at PARSE TIME, propagate through ALL stages
+  # ----------------------------------------------------------
+  # Sample IDs (decoded e.g. "QC_5" OR raw e.g. "09012026_QC_5") to drop from
+  # every output table. Excluded samples never appear in samples.parquet,
+  # abundances, blanks, or dilution tables — all downstream filters then
+  # naturally compute on the cleaner set without code changes.
+  #
+  # Workflow: after a multiverse outlier-detection run flags a likely
+  # technical-outlier injection (e.g. a failed QC), add its id here and
+  # `dvc repro` — DVC will re-run from Stage 1 with the exclusion baked
+  # into every filter computation.
+  #
+  # Example (uncomment and edit):
+  # exclude_samples:
+  #   - "QC_5"           # decoded id from samples.parquet
+  #   - "09012026_QC_5"  # equivalent raw id from the Progenesis CSV header
+  exclude_samples: []

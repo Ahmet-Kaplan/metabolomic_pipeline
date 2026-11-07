@@ -1,0 +1,235 @@
+# ============================================================
+# DVC pipeline definition
+# ============================================================
+# Run with:   dvc repro
+# ============================================================
+
+stages:
+  # ----------------------------------------------------------
+  # Stage 1 — parse Progenesis CSVs into tidy parquet tables
+  # ----------------------------------------------------------
+  parse:
+    desc: Parse the four Progenesis QI CSVs into typed parquet + CSV tables.
+    cmd: biodisc parse
+    deps:
+      - data/progenesisqi_output
+      - src/biodisc/io/progenesis.py
+      - src/biodisc/io/schemas.py
+      - src/biodisc/audit.py
+      - src/biodisc/cli.py
+      - conf/config.yaml
+      - conf/paths/default.yaml
+      - conf/logging/default.yaml
+    params:
+      - seed
+    outs:
+      - data/interim/01_parsed
+      - data/audit/01_parse.parquet
+
+  # ----------------------------------------------------------
+  # Stage 2 — exploratory data analysis
+  # ----------------------------------------------------------
+  eda:
+    desc: ydata-profiling auto-reports + 7 metabolomics plots. Report-only — no drops.
+    cmd: biodisc eda
+    deps:
+      - data/interim/01_parsed
+      - src/biodisc/eda
+      - conf/eda/default.yaml
+    outs:
+      - data/reports/02_eda
+
+  # ----------------------------------------------------------
+  # Stage 3 — modified 80 % rule
+  # ----------------------------------------------------------
+  filter_presence:
+    desc: Drop features absent in ≥ 20% of every biological group (Bijlsma 2006, modified rule).
+    cmd: biodisc filter presence
+    deps:
+      - data/interim/01_parsed/abundances_raw_long.parquet
+      - data/interim/01_parsed/samples.parquet
+      - data/interim/01_parsed/features.parquet
+      - src/biodisc/filters/presence.py
+      - src/biodisc/filters/_presence_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.presence.presence_pct
+    outs:
+      - data/interim/03_presence
+      - data/audit/03_presence.parquet
+      - data/reports/03_presence
+
+  # ----------------------------------------------------------
+  # Stage 4 — QC-CV filter
+  # ----------------------------------------------------------
+  filter_qc_cv:
+    desc: Drop features with CV% across the 16 QCs above the threshold (Broadhurst 2018 mQACC).
+    cmd: biodisc filter qc-cv
+    deps:
+      - data/interim/01_parsed/abundances_raw_long.parquet
+      - data/interim/01_parsed/samples.parquet
+      - data/interim/03_presence/kept_features.parquet
+      - src/biodisc/filters/qc_cv.py
+      - src/biodisc/filters/_qc_cv_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.qc_cv.max_cv_pct
+      - filter.qc_cv.min_qc_detections
+    outs:
+      - data/interim/04_qc_cv
+      - data/audit/04_qc_cv.parquet
+      - data/reports/04_qc_cv
+
+  # ----------------------------------------------------------
+  # Stage 5 — Sample-RSD / QC-RSD ratio filter
+  # ----------------------------------------------------------
+  filter_sample_qc_ratio:
+    desc: Drop features where biological variation ≤ technical (QC) variation.
+    cmd: biodisc filter sample-qc-ratio
+    deps:
+      - data/interim/01_parsed/abundances_raw_long.parquet
+      - data/interim/01_parsed/samples.parquet
+      - data/interim/04_qc_cv/kept_features.parquet
+      - src/biodisc/filters/sample_qc_ratio.py
+      - src/biodisc/filters/_sample_qc_ratio_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.sample_qc_ratio.min_ratio
+      - filter.sample_qc_ratio.min_sample_detections
+      - filter.sample_qc_ratio.min_qc_detections
+    outs:
+      - data/interim/05_sample_qc_ratio
+      - data/audit/05_sample_qc_ratio.parquet
+      - data/reports/05_sample_qc_ratio
+
+  # ----------------------------------------------------------
+  # Stage 6 — Blank filter (Saeed's % formula)
+  # ----------------------------------------------------------
+  filter_blank:
+    desc: >-
+      Drop features whose blank signal exceeds max_blank_pct of mean(sample+QC).
+      Threshold follows Broadhurst 2018 mQACC guidelines; no consensus standard
+      exists for blank filter thresholds in untargeted metabolomics.
+    cmd: biodisc filter blank
+    deps:
+      - data/interim/01_parsed/abundances_raw_long.parquet
+      - data/interim/01_parsed/blanks_long.parquet
+      - data/interim/01_parsed/samples.parquet
+      - data/interim/05_sample_qc_ratio/kept_features.parquet
+      - src/biodisc/filters/blank.py
+      - src/biodisc/filters/_blank_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.blank.max_blank_pct
+      - filter.blank.min_sq_detections
+      - filter.blank.block
+    outs:
+      - data/interim/06_blank
+      - data/audit/06_blank.parquet
+      - data/reports/06_blank
+
+  # ----------------------------------------------------------
+  # Stage 7 — Dilution linearity (R²_linear)
+  # ----------------------------------------------------------
+  filter_dilution:
+    desc: Drop features with R²_linear < threshold over the 4 dilution points.
+    cmd: biodisc filter dilution
+    deps:
+      - data/interim/01_parsed/dilution_ladder_long.parquet
+      - data/interim/06_blank/kept_features.parquet
+      - src/biodisc/filters/dilution.py
+      - src/biodisc/filters/_dilution_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.dilution.min_r2_linear
+      - filter.dilution.min_dilution_detections
+      - filter.dilution.block
+    outs:
+      - data/interim/07_dilution
+      - data/audit/07_dilution.parquet
+      - data/reports/07_dilution
+
+  # ----------------------------------------------------------
+  # Stage 8 — CCS error filter (adduct-aware, quality-floored)
+  # ----------------------------------------------------------
+  filter_ccs:
+    desc: >-
+      Drop features whose best (Progenesis-candidate × adduct) match has CCS error
+      > threshold against the unified external CCS reference (McLean Compendium).
+      "Any-good-match-passes" semantic with Progenesis Score + |ppm| quality floor;
+      pass-through for features lacking a Progenesis candidate or external CCS entry.
+    cmd: biodisc filter ccs
+    deps:
+      - data/interim/01_parsed/features.parquet
+      - data/interim/01_parsed/identification_long.parquet
+      - data/interim/07_dilution/kept_features.parquet
+      - data/external/ccs_reference_unified.parquet
+      - src/biodisc/filters/ccs.py
+      - src/biodisc/filters/_ccs_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.ccs.max_ccs_err_pct
+      - filter.ccs.min_progenesis_score
+      - filter.ccs.max_mass_error_ppm
+      - filter.ccs.twims_bias_dtims
+      - filter.ccs.twims_bias_tims
+    outs:
+      - data/interim/08_ccs
+      - data/audit/08_ccs.parquet
+      - data/reports/08_ccs
+
+  # ----------------------------------------------------------
+  # Stage 9 — Identification candidate ranking (annotation-only)
+  # ----------------------------------------------------------
+  filter_id_ranking:
+    desc: >-
+      Rank Progenesis candidates per feature via Score → Frag Score → |ppm|
+      cascade with quality floor. Output trimmed identification table + per-
+      feature MSI tier (L2/L3/L4). Annotation-only — zero feature drops.
+    cmd: biodisc filter id-ranking
+    deps:
+      - data/interim/01_parsed/identification_long.parquet
+      - data/interim/08_ccs/kept_features.parquet
+      - src/biodisc/filters/id_ranking.py
+      - src/biodisc/filters/_id_ranking_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.id_ranking.min_score
+      - filter.id_ranking.max_mass_error_ppm
+    outs:
+      - data/interim/09_id_ranking
+      - data/audit/09_id_ranking.parquet
+      - data/reports/09_id_ranking
+
+  # ----------------------------------------------------------
+  # Stage 10 — Origin filter (annotation-driven, drops pure-exogenous)
+  # ----------------------------------------------------------
+  filter_origin:
+    desc: >-
+      Drop features whose ALL surviving Stage-9 cascade candidates are
+      pure-exogenous (no Endogenous tag in HMDB Source ontology). Removes
+      drug / FBS / plasticizer / food contamination signals from cell-culture
+      metabolomics. L4 features (no annotation) pass through.
+    cmd: biodisc filter origin
+    deps:
+      - data/interim/09_id_ranking/metrics.parquet
+      - data/interim/09_id_ranking/identification_ranked.parquet
+      - data/interim/09_id_ranking/kept_features.parquet
+      - data/external/hmdb_origin.parquet
+      - src/biodisc/filters/origin.py
+      - src/biodisc/filters/_origin_report.py
+      - conf/filter/default.yaml
+    params:
+      - seed
+      - filter.origin.drop_pure_exogenous
+    outs:
+      - data/interim/10_origin
+      - data/audit/10_origin.parquet
+      - data/reports/10_origin

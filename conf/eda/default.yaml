@@ -1,0 +1,22 @@
+# ============================================================
+# Stage 2 — EDA config
+# ============================================================
+
+# Output
+emit_png: true              # plotly → PNG via kaleido
+output_subdir: "02_eda"     # under paths.reports_dir
+
+# Layer A — ydata-profiling
+run_profiles: true
+profile_features: true
+profile_samples: true
+profile_identification: true   # large table; minimal mode is applied automatically
+
+# Layer B — custom metabolomics plots
+run_plots: true
+
+# Plot-specific parameters
+max_missingness_features: 5000     # cap rows drawn in the missingness heatmap
+dilution_n_sample_features: 30     # how many per-feature curves to draw
+dilution_r2_threshold: 0.7         # domain-expert Stage-7 rule (previewed here)
+blank_pct_threshold: 20.0          # Stage-6 drop threshold previewed here (%)

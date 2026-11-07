@@ -1,0 +1,43 @@
+# ============================================================
+# Paths — default local layout
+# ============================================================
+# Override for docker / cluster runs by composing a different group:
+#   biodisc parse paths=docker
+# ============================================================
+
+# All paths are relative to project root unless absolute.
+# Resolution order: $PROJECT_ROOT env var, else $PWD.
+project_root: ${oc.env:PROJECT_ROOT,${oc.env:PWD}}
+
+raw_dir: "${paths.project_root}/data/progenesisqi_output"
+interim_dir: "${paths.project_root}/data/interim"
+processed_dir: "${paths.project_root}/data/processed"
+reports_dir: "${paths.project_root}/data/reports"
+audit_dir: "${paths.project_root}/data/audit"
+external_dir: "${paths.project_root}/data/external"
+logs_dir: "${paths.project_root}/logs"
+
+# Per-stage output folders
+stage_01_parsed: "${paths.interim_dir}/01_parsed"
+stage_02_eda: "${paths.reports_dir}/02_eda"
+stage_03_presence: "${paths.interim_dir}/03_presence"
+stage_04_qc_cv: "${paths.interim_dir}/04_qc_cv"
+stage_05_sample_qc_ratio: "${paths.interim_dir}/05_sample_qc_ratio"
+stage_06_blank: "${paths.interim_dir}/06_blank"
+stage_07_dilution: "${paths.interim_dir}/07_dilution"
+stage_08_ccs: "${paths.interim_dir}/08_ccs"
+stage_09_id_ranking: "${paths.interim_dir}/09_id_ranking"
+stage_10_origin: "${paths.interim_dir}/10_origin"
+
+# External-reference artefacts (Stage 8 + later annotation stages)
+external_raw_dir: "${paths.external_dir}/raw"
+hmdb_inchikey_parquet: "${paths.external_dir}/hmdb_inchikey.parquet"
+hmdb_origin_parquet: "${paths.external_dir}/hmdb_origin.parquet"
+hmdb_kegg_parquet: "${paths.external_dir}/hmdb_kegg.parquet"
+ccs_reference_parquet: "${paths.external_dir}/ccs_reference_unified.parquet"
+mclean_csv: "${paths.external_raw_dir}/mclean_allMASTER.csv"
+hmdb_xml: "${paths.external_raw_dir}/hmdb_metabolites.xml"
+
+# Run-order metadata (drift correction needs the chronological sequence)
+run_order_headers_dir: "${paths.project_root}/data/acquisition_headers"
+run_order_parquet: "${paths.external_dir}/run_order.parquet"

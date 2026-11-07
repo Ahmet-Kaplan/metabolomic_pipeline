@@ -1,0 +1,71 @@
+# ============================================================
+# Phase 2 — Multiverse (Stages 11–17)
+# ============================================================
+# Drives `biodisc multiverse run`. This stage is NOT part of the auto
+# `dvc repro` DAG: a full run takes hours, so it is launched explicitly.
+#
+# Override at the CLI like any other stage, e.g.:
+#   biodisc multiverse run multiverse.n_permutation=200
+#   biodisc multiverse run multiverse.outcome_filter=[endogenous_evidence]
+#   biodisc multiverse run multiverse.output_dir=data/reports/multiverse_test
+# ============================================================
+
+# Stability / permutation budgets.
+#   Production (locked plan §16): n_bootstrap=100, n_permutation=1000.
+#   For a fast smoke, drop to e.g. 30 / 100.
+n_bootstrap: 100
+n_permutation: 1000
+
+# Consensus: a feature passes if flagged in ≥ threshold of the paths.
+# 0.5 = simple majority (tier_2); tier_1 is ≥ 0.75.
+threshold: 0.5
+
+# Restrict which Stage-10 origin categories enter the multiverse.
+#   null                                         → all Stage-10 survivors (default)
+#   [endogenous_evidence, exo_or_unknown]        → drop unidentified (L4) features
+#   [endogenous_evidence]                        → annotated endogenous only
+# Preview counts first with: python scripts/diagnose_outcome_filter.py
+outcome_filter: null
+
+# Where the per-path reports, consensus, and index.html are written.
+output_dir: "${paths.reports_dir}/multiverse"
+
+# BLAS / OpenMP thread cap for the run.
+#   null → no cap (use on a dedicated machine with cores to spare)
+#   1    → desktop-friendly: prevents sklearn n_jobs × BLAS-threads oversubscription
+# Applied at runtime via threadpoolctl, so it works regardless of import order.
+n_threads: null
+
+# ----------------------------------------------------------
+# The methodological-philosophy paths.
+# Each is a full worldview, not a single-axis swap. Omit any *_params to use
+# the method's data-aware auto-derived defaults (recommended).
+# ----------------------------------------------------------
+paths:
+  - name: path_a_classical      # Classical mQACC textbook
+    imputation: halfmin
+    drift: qc_rsc
+    normalisation: pqn
+    transformation: log2
+    scaling: pareto
+
+  - name: path_b_robust_ml      # Robust ML / tree-based throughout (all auto)
+    imputation: missforest
+    drift: serrf
+    normalisation: mstus
+    transformation: glog
+    scaling: pareto
+
+  - name: path_c_mnar_aware     # MNAR-aware (below-LOD friendly)
+    imputation: qrilc
+    drift: qc_rsc
+    normalisation: pqn
+    transformation: glog
+    scaling: pareto
+
+  - name: path_d_middle         # Middle-ground hybrid
+    imputation: ns_knn
+    drift: serrf
+    normalisation: median
+    transformation: log2
+    scaling: pareto

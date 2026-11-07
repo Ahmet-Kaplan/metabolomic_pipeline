@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-and-reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install (exact versions from uv.lock)
+        run: uv sync --frozen --all-extras
+
+      - name: Unit and integration tests
+        run: uv run pytest -q tests
+
+      # Rebuild every derived analysis table from the committed multiverse
+      # outputs and fail if any number differs from what is committed.
+      - name: Regenerate analysis tables
+        run: |
+          for s in diagnose_multiverse_instability build_paper_tables \
+                   ranking_method_agreement sensitivity_consensus_threshold \
+                   ensemble_weighted_voting make_paper_figures; do
+            uv run python scripts/$s.py
+          done
+
+      - name: Committed results must match regenerated results
+        run: git diff --exit-code -- 'data/**/*.csv' 'data/**/*.json'

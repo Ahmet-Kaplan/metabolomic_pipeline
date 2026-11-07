@@ -1,0 +1,61 @@
+# ============================================================
+# DVC params — pipeline-tracked configuration
+# ============================================================
+# Values here are mirrored into Hydra config at CLI run time. DVC tracks
+# changes so `dvc repro` only reruns stages affected by a config edit.
+# ============================================================
+
+# Global deterministic seed for every stochastic stage
+seed: 42
+
+# Stage 1 — parse
+parse:
+  emit_parquet: true
+  emit_csv_mirror: true
+  emit_wide: true
+  emit_long: true
+  canonical_abundance: raw
+  # Sample IDs (decoded e.g. "QC_5" OR raw e.g. "09012026_QC_5") to drop at
+  # parse time. Add multiverse-flagged technical outliers here, then `dvc repro`
+  # re-runs every stage from Stage 1 with the cleaner sample set.
+  exclude_samples: []
+
+# Per-file names (swap in a new dataset by overriding just these)
+files:
+  measurement: "I_66_CELL_METABOLOMICS_COMPOUND_MEASUREMENT(in).csv"
+  blank: "Blank(in).csv"
+  dilution: "dİLUTION(in).csv"
+  identification: "I_66_CELL_METABOLOMICS_COMPOUND_IDENTIFICATION.csv"
+
+# Placeholder — later stages will populate this.
+filter:
+  presence:
+    presence_pct: 0.80
+  qc_cv:
+    max_cv_pct: 30.0
+    min_qc_detections: 3
+  sample_qc_ratio:
+    min_ratio: 1.0
+    min_sample_detections: 3
+    min_qc_detections: 3
+  blank:
+    max_blank_pct: 20.0
+    min_sq_detections: 3
+    block: "raw"
+  dilution:
+    min_r2_linear: 0.70
+    min_dilution_detections: 3
+    block: "raw"
+  ccs:
+    max_ccs_err_pct: 2.0
+    min_progenesis_score: 30.0
+    max_mass_error_ppm: 5.0
+    twims_bias_dtims: 1.015
+    twims_bias_tims: 1.010
+  id_ranking:
+    min_score: 30.0
+    max_mass_error_ppm: 5.0
+  origin:
+    drop_pure_exogenous: true
+
+benchmark: {}

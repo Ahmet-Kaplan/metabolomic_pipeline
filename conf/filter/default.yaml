@@ -1,0 +1,97 @@
+# ============================================================
+# Stages 3–7 filter thresholds
+# ============================================================
+
+# Stage 3 — modified 80 % rule
+presence:
+  # Keep feature iff max over groups of (present / group_size) >= presence_pct
+  # 0.80 is the mQACC default (Bijlsma 2006, Anal Chem 78:567).
+  presence_pct: 0.80
+
+# Stage 4 — QC-CV filter
+# Drop features with CV % across the 16 QCs > max_cv_pct.
+# Default is the mQACC strict value (Broadhurst 2018).
+# For the loose pre-drift pass (mQACC two-pass protocol), override to 50.0:
+#   biodisc filter qc-cv filter.qc_cv.max_cv_pct=50
+qc_cv:
+  max_cv_pct: 30.0
+  min_qc_detections: 3   # must have ≥ this many non-zero QC values to compute CV
+
+# Stage 5 — Sample-RSD / QC-RSD ratio filter
+# Keep iff (RSD_samples / RSD_QC) > min_ratio AND both detection counts ≥ min_*_detections.
+# The domain expert specifies threshold > 1 (biology > technical noise).
+# This is the inverted D-ratio (Broadhurst 2018); ratio > 1 ↔ D-ratio < 1.
+sample_qc_ratio:
+  min_ratio: 1.0
+  min_sample_detections: 3
+  min_qc_detections: 3
+
+# Stage 6 — blank filter (Saeed's % formula)
+# Drop iff  100 × mean(blank) / mean(sample+qc) > max_blank_pct.
+# 20 % is the mQACC equivalent of sample/blank ≥ 5 (Broadhurst 2018).
+# Loosen to 50 % if drop rate too aggressive for your dataset.
+blank:
+  max_blank_pct: 20.0
+  min_sq_detections: 3   # require ≥ N non-zero sample+QC values to compute pct
+  block: "raw"           # which abundance block to use
+
+# Stage 7 — dilution linearity (linear only, domain-expert-confirmed 2026-04-24)
+# Drop iff R²_linear < min_r2_linear OR fewer than min_dilution_detections
+# of the 4 dilution points are non-zero (need ≥3 to fit a line honestly).
+dilution:
+  min_r2_linear: 0.70
+  min_dilution_detections: 3
+  block: "raw"
+
+# Stage 8 — CCS error filter (adduct-aware, quality-floored)
+# For each Stage-7-active feature, evaluate every (Progenesis candidate × adduct)
+# pair against the unified external CCS reference (McLean Compendium for now).
+# Keep iff at least one (candidate, adduct) pair satisfies all three:
+#   |measured_ccs − corrected_reference_ccs| / corrected_reference_ccs × 100 ≤ max_ccs_err_pct
+#   Progenesis Score ≥ min_progenesis_score   (quality floor — prevents junk ID coincidental CCS pass)
+#   |Progenesis mass_error_ppm| ≤ max_mass_error_ppm   (MS₁ accuracy floor)
+# Pass-through (kept without check) for features with no Progenesis candidate
+# OR no candidate matching anything in the external CCS reference — we don't
+# drop based on a check we can't apply (Bijlsma 2006 untargeted-discovery principle).
+# Bias correction: McLean is DTIMS-calibrated (Agilent 6560); your Waters TWIMS
+# instrument runs ~1.5 % higher → multiply reference by twims_bias_dtims to compare.
+ccs:
+  max_ccs_err_pct: 2.0          # Paglia 2014 default; sensitivity-sweepable
+  min_progenesis_score: 30.0    # quality floor (Progenesis composite Score)
+  max_mass_error_ppm: 5.0       # high-resolution MS₁ accuracy floor
+  twims_bias_dtims: 1.015       # Waters TWIMS vs Agilent DTIMS — Hines 2017 typical
+  twims_bias_tims: 1.010        # Waters TWIMS vs Bruker TIMS  — Mendoza-Salcido 2022 typical
+
+# Stage 10 — Origin filter (annotation-driven, drops pure-exogenous features)
+# For each Stage-9-active feature, look up the surviving cascade candidates'
+# origin classification in the HMDB Source ontology. Drop features whose ALL
+# surviving candidates are pure-exogenous (no "Endogenous" tag).
+# Cell-culture context: removes drug, plasticizer, FBS-derived, food-derived,
+# microbial-derived signals — these are real LC-MS peaks but not biology of
+# interest in breast cancer cell lines.
+# Aggregation rule:
+#   ANY candidate with Endo or Both tag         → "endogenous_evidence"  → KEEP
+#   ALL candidates pure exogenous_only          → "all_exogenous"         → DROP
+#   Mix of exogenous_only + unannotated, no Endo → "exo_or_unknown"        → KEEP (conservative)
+#   Feature is L4 (no annotation at all)         → "passthrough_l4"        → KEEP
+# Set drop_pure_exogenous=false for SOFT-tag mode (no drops, only metadata).
+origin:
+  drop_pure_exogenous: true
+
+# Stage 9 — Identification candidate ranking (annotation-only)
+# For each Stage-8-active feature with ≥ 1 Progenesis candidate, apply this
+# cascade to choose the best annotation:
+#   Step 0. Drop candidates with Score < min_score OR |ppm| > max_mass_error_ppm.
+#   Step 1. Among survivors, keep those with the maximum Score (rounded to 2 dp).
+#   Step 2. Among Step-1 survivors, if any has a Fragmentation Score, keep only
+#           those with the maximum Frag Score. Otherwise carry through.
+#   Step 3. Among Step-2 survivors, keep those with the minimum |mass_error_ppm|.
+# Whatever survives is the annotation:
+#   1 candidate → MSI L2 (single putative)
+#   >1 candidates → MSI L3 (compound class — biologist decides; tied honestly)
+#   0 candidates → MSI L4 (none passed quality floor)
+# Features with no Progenesis candidate at all → MSI L4 (no_candidate).
+# Stage 9 DOES NOT DROP FEATURES — every active feature passes through.
+id_ranking:
+  min_score: 30.0               # Progenesis composite Score floor (vendor default)
+  max_mass_error_ppm: 5.0       # MS₁ accuracy floor (Q-TOF capability)

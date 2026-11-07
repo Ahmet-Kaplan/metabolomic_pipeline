@@ -1,0 +1,9 @@
+# ============================================================
+# Logging config
+# ============================================================
+
+# structlog + stdlib logging integration
+level: INFO
+json_output: false   # true for machine logs, false for dev console
+include_caller: true
+log_file: null       # set to a path to also write JSON logs to disk

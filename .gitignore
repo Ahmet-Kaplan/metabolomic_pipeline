@@ -1,0 +1,71 @@
+# ============================================================
+# Biomarker Discovery MLOps — .gitignore
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Data — DVC-tracked, do NOT commit raw files or interim outputs
+data/processed/
+data/external/*
+!data/external/run_order.parquet
+benchmarks/
+
+# Raw instrument exports — too large for git (use DVC or supply your own)
+data/progenesisqi_output/
+
+# Stage 1 CSV mirrors exceed GitHub's 100 MB limit; parquets are committed instead
+data/interim/01_parsed/*.csv
+
+# Waters acquisition headers — instrument-specific, not needed to reproduce the pipeline
+data/acquisition_headers/
+
+# Do track .dvc metadata files though
+!**/.dvc
+!**/*.dvc
+!.dvcignore
+
+# DVC
+/tmp.dvc/
+
+# Hydra / MLflow run artifacts
+outputs/
+multirun/
+mlruns/
+mlartifacts/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb  # uncomment if you want to ignore notebooks entirely
+
+# Local tool configs
+.claude/
+
+# OS
+Thumbs.db
